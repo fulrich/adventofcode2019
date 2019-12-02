@@ -11,5 +11,6 @@ libraryDependencies ++= Seq(
 
 // Test
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.1.0" % "test"
+  "org.scalatest" %% "scalatest" % "3.1.0" % "test",
+  "com.github.fulrich" %% "test-charged" % "0.1.16" % "test"
 )
