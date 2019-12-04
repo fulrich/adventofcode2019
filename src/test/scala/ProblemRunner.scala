@@ -62,14 +62,14 @@ class ProblemRunner extends AnyFunSuite with Matchers {
 
 
   test("Day 4 - Problem 1 - Determine the Password for Venus Fuel Depot") {
-    val validPasswords = PasswordDeterminer.validPasswords
+    val validPasswords = PasswordDeterminer.validPasswords()
     validPasswords.length shouldBe 966
 
     println(s"Day 4 - Problem 1 Answer: ${validPasswords.length}")
   }
 
   test("Day 4 - Problem 2 - Determine the More Comprehensive Password for Venus Fuel Depot") {
-    val comprehensiveValidPasswords = PasswordDeterminer.comprehensiveValidPasswords
+    val comprehensiveValidPasswords = PasswordDeterminer.validPasswords(onlyTwoAdjacent = true)
     comprehensiveValidPasswords.length shouldBe 628
 
     println(s"Day 4 - Problem 2 Answer: ${comprehensiveValidPasswords.length}")

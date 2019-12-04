@@ -4,26 +4,18 @@ object PasswordDeterminer {
   val PasswordRange: Range = 264793 to 803935
 
 
-  def validPasswords: Seq[Int] = validPasswordsWithin(PasswordRange)
+  def validPasswords(onlyTwoAdjacent: Boolean = false): Seq[Int] =
+    validPasswordsWithin(PasswordRange, onlyTwoAdjacent)
 
-  def validPasswordsWithin(range: Range): Seq[Int] = range.filter(isValidPassword)
+  def validPasswordsWithin(range: Range, onlyTwoAdjacent: Boolean = false): Seq[Int] =
+    range.filter(isValidPassword(_, onlyTwoAdjacent))
 
-  def isValidPassword(password: Int): Boolean = {
-    val passwordByteArray: Seq[Byte] = password.toString.map(_.toByte)
-    hasAdjacentDigits(passwordByteArray) && hasNoDecreasingDigits(passwordByteArray)
-  }
-
-
-  def comprehensiveValidPasswords: Seq[Int] = comprehensiveValidPasswordsWithin(PasswordRange)
-
-  def comprehensiveValidPasswordsWithin(range: Range): Seq[Int] = range.filter(isValidComprehensivePassword)
-
-  def isValidComprehensivePassword(password: Int): Boolean = {
+  def isValidPassword(password: Int, onlyTwoAdjacent: Boolean = false): Boolean = {
     val passwordByteArray: Seq[Byte] = password.toString.map(_.toByte)
 
     hasAdjacentDigits(passwordByteArray) &&
       hasNoDecreasingDigits(passwordByteArray) &&
-      adjacentIsOnlyTwo(passwordByteArray)
+      (if (onlyTwoAdjacent) adjacentIsOnlyTwo(passwordByteArray) else true)
   }
 
 

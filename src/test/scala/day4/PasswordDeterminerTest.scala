@@ -9,9 +9,9 @@ class PasswordDeterminerTest extends AnyFunSuite with Matchers {
   }
 
   test("Can detect comprehensive valid passwords") {
-    PasswordDeterminer.isValidComprehensivePassword(112233) shouldBe true
-    PasswordDeterminer.isValidComprehensivePassword(123444) shouldBe false
-    PasswordDeterminer.isValidComprehensivePassword(111122) shouldBe true
+    PasswordDeterminer.isValidPassword(112233, onlyTwoAdjacent = true) shouldBe true
+    PasswordDeterminer.isValidPassword(123444, onlyTwoAdjacent = true) shouldBe false
+    PasswordDeterminer.isValidPassword(111122, onlyTwoAdjacent = true) shouldBe true
   }
 
   test("Returns false if any of the numbers decrease") {
