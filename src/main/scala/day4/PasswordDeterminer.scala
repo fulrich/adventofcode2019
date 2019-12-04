@@ -13,11 +13,11 @@ object PasswordDeterminer {
     range.filter(isValidPassword(_, onlyTwoAdjacent))
 
   def isValidPassword(password: Int, onlyTwoAdjacent: Boolean = false): Boolean = {
-    val passwordByteArray: Seq[Byte] = password.toString.map(_.toByte)
+    val digits: Seq[Byte] = password.toString.map(_.toByte)
 
-    hasAdjacentDigits(passwordByteArray) &&
-      hasNoDecreasingDigits(passwordByteArray) &&
-      (if (onlyTwoAdjacent) hasOnlyTwoAdjacentDigits(passwordByteArray) else true)
+    hasAdjacentDigits(digits) &&
+      hasNoDecreasingDigits(digits) &&
+      (if (onlyTwoAdjacent) hasOnlyTwoAdjacentDigits(digits) else true)
   }
 
 
