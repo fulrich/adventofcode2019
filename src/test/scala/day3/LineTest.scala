@@ -16,6 +16,13 @@ class LineTest extends AnyFunSuite with Matchers {
     verticalLine.allPoints shouldBe expectedVerticalPoints
   }
 
+  test("Retains directionality when building the list of points") {
+    val lineGoingLeft = Line(Point(5,0), Point(1, 0))
+    val expectedPoints = Vector(Point(5, 0), Point(4, 0), Point(3, 0), Point(2, 0), Point(1, 0))
+
+    lineGoingLeft.allPoints shouldBe expectedPoints
+  }
+
   test("Can detect if the line is horizontal") {
     val horizontalLine = Line(Point(1,0), Point(5, 0))
 

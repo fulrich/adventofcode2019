@@ -12,6 +12,17 @@ class WireTest extends AnyFunSuite with Matchers {
     Line(Point(3, 5), Point(3, 2))
   )
 
+  test("Can determine the number of steps to a specific point on the line") {
+    val wire1 = Wire.fromRaw("R8,U5,L5,D3")
+    val wire2 = Wire.fromRaw("U7,R6,D4,L4")
+
+    wire1.stepsTo(Point(3, 3)) shouldBe 20
+    wire2.stepsTo(Point(3, 3)) shouldBe 20
+
+    wire1.stepsTo(Point(6, 5)) shouldBe 15
+    wire2.stepsTo(Point(6, 5)) shouldBe 15
+  }
+
   test("Can determine the intersection points of two wires") {
       val wire1 = Wire.fromRaw("R8,U5,L5,D3")
       val wire2 = Wire.fromRaw("U7,R6,D4,L4")
@@ -22,7 +33,7 @@ class WireTest extends AnyFunSuite with Matchers {
   test("Can determine all the points in a wire") {
     val directions = "R1,U1,L1,D1"
     val wire = Wire.fromRaw(directions)
-    val expectedPoints = Vector(Point(0,0), Point(1, 0), Point(1, 1), Point(0,1))
+    val expectedPoints = Vector(Point(0,0), Point(1, 0), Point(1, 1), Point(0,1), Point(0, 0))
 
     wire.allPoints shouldBe expectedPoints
   }

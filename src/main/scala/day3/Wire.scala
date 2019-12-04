@@ -1,9 +1,14 @@
 package day3
 
 case class Wire(segments: Seq[Line] = Vector.empty) {
-  lazy val allPoints: Seq[Point] = segments.flatMap(_.allPoints).distinct
+  lazy val allPoints: Seq[Point] =
+    segments.init.flatMap(_.allPoints.dropRight(1)) ++ segments.last.allPoints
 
   def intersectionPoints(wire: Wire): Seq[Point] = allPoints.intersect(wire.allPoints).filterNot(Point.CentralPort.==)
+
+  def stepsTo(point: Point): Int = {
+    allPoints.segmentLength(pointInLine => pointInLine != point)
+  }
 
   def addSegment(direction: WireDirection): Wire = {
     val lastPoint = segments.lastOption.map(_.point2).getOrElse(Point.CentralPort)
