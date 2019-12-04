@@ -1,5 +1,6 @@
 import day1.{FuelCounterUpper, ModuleFueler, ShipModules}
 import day2.{IntcodeComputer, IntcodePrograms, NounVerbFinder}
+import day3.{FuelManagementPanel, IntersectionClosestTo, Point}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -37,5 +38,15 @@ class ProblemRunner extends AnyFunSuite with Matchers {
     foundValue shouldBe 5064
 
     println(s"Day 2 - Problem 1 Answer: ${NounVerbFinder.find()}")
+  }
+
+
+  test("Day 3 - Problem 1: Fix the Fuel Management System") {
+    val wiresInPanel = FuelManagementPanel.wireList.get
+    val pointClosestToCentralPort = IntersectionClosestTo(Point.CentralPort)(wiresInPanel.head, wiresInPanel.last)
+    val distanceToCentralPort = pointClosestToCentralPort.manhattanDistanceTo(Point.CentralPort)
+    distanceToCentralPort shouldBe 316
+
+    println(s"Day 3 - Problem 1 Answer: $distanceToCentralPort")
   }
 }
