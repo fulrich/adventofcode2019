@@ -1,8 +1,10 @@
 import day1.{FuelCounterUpper, ModuleFueler, ShipModules}
 import day2.{IntcodeComputer, IntcodePrograms, NounVerbFinder}
 import day3.{FuelManagementPanel, IntersectionClosestTo, Point, StepsClosestTo}
+import day4.PasswordDeterminer
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+
 
 class ProblemRunner extends AnyFunSuite with Matchers {
   test("Day 1 - Problem 1: How much fuel for all modules") {
@@ -56,5 +58,20 @@ class ProblemRunner extends AnyFunSuite with Matchers {
     minimumStepsNeeded shouldBe 16368
 
     println(s"Day 3 - Problem 2 Answer: $minimumStepsNeeded")
+  }
+
+
+  test("Day 4 - Problem 1 - Determine the Password for Venus Fuel Depot") {
+    val validPasswords = PasswordDeterminer.validPasswords
+    validPasswords.length shouldBe 966
+
+    println(s"Day 4 - Problem 1 Answer: ${validPasswords.length}")
+  }
+
+  test("Day 4 - Problem 2 - Determine the More Comprehensive Password for Venus Fuel Depot") {
+    val comprehensiveValidPasswords = PasswordDeterminer.comprehensiveValidPasswords
+    comprehensiveValidPasswords.length shouldBe 628
+
+    println(s"Day 4 - Problem 2 Answer: ${comprehensiveValidPasswords.length}")
   }
 }
