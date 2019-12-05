@@ -14,3 +14,7 @@ case class IntcodeComputer(initial: IntcodeState, configuration: ComputerConfigu
     if(program.isComplete) program
     else execute(instructionSet.execute(program))
 }
+
+object IntcodeComputer {
+  def apply(intcodes: Int*): IntcodeComputer = IntcodeComputer(IntcodeState(intcodes))
+}

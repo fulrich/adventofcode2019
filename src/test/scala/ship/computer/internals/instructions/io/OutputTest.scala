@@ -8,7 +8,7 @@ import ship.computer.internals.IntcodeState
 
 class OutputTest extends AnyFunSuite with Matchers with ComputerTesting {
   test("Adds the first two parameters and outputs it to the third parameter address") {
-    val program = IntcodeState.initial(4, 2, 99)
+    val program = IntcodeState(4, 2, 99)
     val expected = IntcodeState(Vector(4, 2, 99), 2)
 
     val output = new TestOutputSource()

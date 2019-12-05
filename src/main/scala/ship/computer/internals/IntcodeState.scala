@@ -16,5 +16,5 @@ case class IntcodeState(memory: Seq[Int], instructionPointer: Int = 0, isComplet
 }
 
 object IntcodeState {
-  def initial(intcodes: Int*): IntcodeState = IntcodeState(intcodes.toVector, 0)
+  def apply(intcodes: Int*): IntcodeState = IntcodeState(intcodes.toVector, 0)
 }
