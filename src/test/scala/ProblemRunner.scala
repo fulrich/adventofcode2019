@@ -10,8 +10,8 @@ import venus.FuelDepot
 class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   test("Day 1 - Problem 1: How much fuel for all modules") {
     val modules = ShipModules.modules.get
-    val fueledModules = modules.map(module => module.copy(fuel = ModuleFueler.fuelForMass(module.mass)))
-    val requiredFuel = FuelCounterUpper.totalFuelFor(fueledModules)
+    val fueledModules = ModuleFueler.fuelUpModulesIgnoringFuelWeight(modules)
+    val requiredFuel = FuelCounterUpper.countTotalFuel(fueledModules)
     requiredFuel shouldBe 3497399
 
     println(s"Day 1 - Problem 1 Answer: ${requiredFuel}")
@@ -20,7 +20,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   test("Day 1 - Problem 2: How much fuel accounting for fuel weight") {
     val modules = ShipModules.modules.get
     val fueledModules = ModuleFueler.fuelUpModules(modules)
-    val requiredFuel = FuelCounterUpper.totalFuelFor(fueledModules)
+    val requiredFuel = FuelCounterUpper.countTotalFuel(fueledModules)
     requiredFuel shouldBe 5243207
 
     println(s"Day 1 - Problem 2 Answer: ${requiredFuel}")

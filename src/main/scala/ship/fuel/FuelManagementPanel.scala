@@ -5,6 +5,7 @@ import ship.panel.Wire
 import scala.io.Source
 import scala.util.Try
 
+
 object FuelManagementPanel {
   val fuelManagementPanelWires = "ship/fuel/wire_panel.txt"
 

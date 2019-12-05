@@ -6,22 +6,10 @@ import ship.Module
 
 
 class ModuleFuelerTest extends AnyFunSuite with Matchers {
-  test("Can correctly calculate the needed fuel for a given module mass"){
-    ModuleFueler.fuelForModuleMass(14) shouldBe 2
-    ModuleFueler.fuelForModuleMass(1969) shouldBe 966
-    ModuleFueler.fuelForModuleMass(100756) shouldBe 50346
-  }
-
   test("Can fuel up a module") {
     ModuleFueler.fuelUpModule(Module(mass = 14)) shouldBe Module(mass = 14, fuel = 2)
     ModuleFueler.fuelUpModule(Module(mass = 1969)) shouldBe Module(mass = 1969, fuel = 966)
     ModuleFueler.fuelUpModule(Module(mass = 100756)) shouldBe Module(mass = 100756, fuel = 50346)
-  }
-
-  test("Can calculate fuel for a specific mass") {
-    ModuleFueler.fuelForMass(12) shouldBe 2
-    ModuleFueler.fuelForMass(1969) shouldBe 654
-    ModuleFueler.fuelForMass(100756) shouldBe 33583
   }
 
   test ("Can fuel up a list of modules") {
@@ -37,5 +25,26 @@ class ModuleFuelerTest extends AnyFunSuite with Matchers {
     )
 
     ModuleFueler.fuelUpModules(modules) shouldBe expected
+  }
+
+  test("Can fuel up a module not accounting for the weight of the fuel") {
+    ModuleFueler.fuelUpModuleIgnoringFuelWeight(Module(mass = 14)) shouldBe Module(mass = 14, fuel = 2)
+    ModuleFueler.fuelUpModuleIgnoringFuelWeight(Module(mass = 1969)) shouldBe Module(mass = 1969, fuel = 654)
+    ModuleFueler.fuelUpModuleIgnoringFuelWeight(Module(mass = 100756)) shouldBe Module(mass = 100756, fuel = 33583)
+  }
+
+  test("Can fuel up a list of modules not accounting for the weight of the fuel") {
+    val modules = Vector(
+      Module(mass = 14),
+      Module(mass = 1969),
+      Module(mass = 100756)
+    )
+    val expected = Vector(
+      Module(mass = 14, fuel = 2),
+      Module(mass = 1969, fuel = 654),
+      Module(mass = 100756, fuel = 33583)
+    )
+
+    ModuleFueler.fuelUpModulesIgnoringFuelWeight(modules) shouldBe expected
   }
 }
