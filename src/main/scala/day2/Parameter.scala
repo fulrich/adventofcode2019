@@ -1,6 +1,12 @@
 package day2
 
-case class Parameter(address: Int, value: Int)
+case class Parameter(address: Int, value: Int) {
+  def + (parameter: Parameter): Int = value + parameter.value
+  def * (parameter: Parameter): Int = value * parameter.value
+
+  def < (parameter: Parameter): Boolean = value < parameter.value
+  def == (parameter: Parameter): Boolean = value == parameter.value
+}
 
 
 object Parameter {

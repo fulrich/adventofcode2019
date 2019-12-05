@@ -1,7 +1,7 @@
 import java.io.{ByteArrayOutputStream, StringReader}
 
 import day1.{FuelCounterUpper, ModuleFueler, ShipModules}
-import day2.{IntcodeComputer, IntcodePrograms, IntcodeState, NounVerbFinder}
+import day2.{ComputerTesting, IntcodeComputer, IntcodePrograms, IntcodeState, NounVerbFinder}
 import day3.{FuelManagementPanel, IntersectionClosestTo, Point, StepsClosestTo}
 import day4.PasswordDeterminer
 import day5.TestTerminalPrograms
@@ -9,7 +9,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 
-class ProblemRunner extends AnyFunSuite with Matchers {
+class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   test("Day 1 - Problem 1: How much fuel for all modules") {
     val modules = ShipModules.modules.get
     val fueledModules = modules.map(module => module.copy(fuel = ModuleFueler.fuelForMass(module.mass)))
@@ -79,18 +79,19 @@ class ProblemRunner extends AnyFunSuite with Matchers {
   }
 
 
-  test("Day 5 - Problem 1 - Run Tests on Thermal Environment Supervision Terminal") {
+  test("Day 5 - Problem 1 - Run Diagnostic Tests on the Thermal Environment Supervision Terminal") {
     val program = TestTerminalPrograms.diagnosticTests.get
+    val diagnosticCode = withIO("1") { IntcodeComputer.run(program) }.last
 
-    val output = new ByteArrayOutputStream()
-    Console.withIn(new StringReader("1")) {
-      Console.withOut(output) {
-        IntcodeComputer.run(program)
-      }
-    }
+    diagnosticCode shouldBe 6731945
+    println(s"Day 5 - Problem 1 Answer: $diagnosticCode")
+  }
 
-    val diagnostiCode = output.toString.trim.split('\n').last
-    diagnostiCode shouldBe "6731945"
-    println(s"Day 5 - Problem 1 Answer: $diagnostiCode")
+  test("Day 5 - Problem 2 - Run Diagnostic Tests on the Thermal Radiator Controller") {
+    val program = TestTerminalPrograms.diagnosticTests.get
+    val diagnosticCode = withIO("5") { IntcodeComputer.run(program) }.last
+
+    diagnosticCode shouldBe 9571668
+    println(s"Day 5 - Problem 1 Answer: $diagnosticCode")
   }
 }

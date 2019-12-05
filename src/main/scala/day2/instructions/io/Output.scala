@@ -1,5 +1,7 @@
-package day2.instructions
+package day2.instructions.io
+
 import day2.IntcodeState
+import day2.instructions.Instruction
 
 object Output extends Instruction {
   override val Opcode: Int = 4

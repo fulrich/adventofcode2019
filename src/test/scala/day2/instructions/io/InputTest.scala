@@ -1,4 +1,4 @@
-package day2.instructions
+package day2.instructions.io
 
 import java.io.StringReader
 

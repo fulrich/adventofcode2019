@@ -5,7 +5,7 @@ import java.io.{ByteArrayOutputStream, StringReader}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-class IntcodeComputerTest extends AnyFunSuite with Matchers {
+class IntcodeComputerTest extends AnyFunSuite with Matchers with ComputerTesting {
   test("Can handle simple addition intcode programs") {
     val program = IntcodeState.initial(1, 0, 0, 0, 99)
     val output = Vector(2, 0, 0, 0, 99)
@@ -45,13 +45,54 @@ class IntcodeComputerTest extends AnyFunSuite with Matchers {
     val program = IntcodeState.initial(3, 0, 4, 0, 99)
     val programCompleteState = Vector(250, 0, 4, 0, 99)
 
-    val output = new ByteArrayOutputStream()
-    Console.withIn(new StringReader("250")) {
-      Console.withOut(output) {
-        IntcodeComputer.run(program).memory shouldBe programCompleteState
-      }
+    val output = withIO("250") {
+      IntcodeComputer.run(program).memory shouldBe programCompleteState
     }
 
-    output.toString.trim shouldBe "250"
+    output.head shouldBe 250
+  }
+
+  test("Can run a program that tests if the input is equal to 8 using position mode") {
+    val isEqualTo8 = IntcodeState(Vector(3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8))
+
+    val runWith8Result = withIO("8") { IntcodeComputer.run(isEqualTo8) }
+    val runWith10Result = withIO("10") { IntcodeComputer.run(isEqualTo8) }
+
+    runWith8Result.head shouldBe 1
+    runWith10Result.head shouldBe 0
+  }
+
+  test("Can run a program that tests if the input is less than 8 using position mode") {
+    val isEqualTo8 = IntcodeState(Vector(3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8))
+
+    val runWith6Result = withIO("6") { IntcodeComputer.run(isEqualTo8) }
+    val runWith8Result = withIO("8") { IntcodeComputer.run(isEqualTo8) }
+    val runWith10Result = withIO("10") { IntcodeComputer.run(isEqualTo8) }
+
+    runWith6Result.head shouldBe 1
+    runWith8Result.head shouldBe 0
+    runWith10Result.head shouldBe 0
+  }
+
+  test("Can run a program that tests if the input is equal to 8 using immediate mode") {
+    val isEqualTo8 = IntcodeState(Vector(3, 3, 1108, -1, 8, 3, 4, 3, 99))
+
+    val runWith8Result = withIO("8") { IntcodeComputer.run(isEqualTo8) }
+    val runWith10Result = withIO("10") { IntcodeComputer.run(isEqualTo8) }
+
+    runWith8Result.head shouldBe 1
+    runWith10Result.head shouldBe 0
+  }
+
+  test("Can run a program that tests if the input is less than 8 using immediate mode") {
+    val isEqualTo8 = IntcodeState(Vector(3, 3, 1107, -1, 8, 3, 4, 3, 99))
+
+    val runWith6Result = withIO("6") { IntcodeComputer.run(isEqualTo8) }
+    val runWith8Result = withIO("8") { IntcodeComputer.run(isEqualTo8) }
+    val runWith10Result = withIO("10") { IntcodeComputer.run(isEqualTo8) }
+
+    runWith6Result.head shouldBe 1
+    runWith8Result.head shouldBe 0
+    runWith10Result.head shouldBe 0
   }
 }

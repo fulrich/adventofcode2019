@@ -1,4 +1,4 @@
-package day2.instructions
+package day2.instructions.control
 
 import day2.IntcodeState
 import org.scalatest.funsuite.AnyFunSuite

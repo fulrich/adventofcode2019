@@ -1,6 +1,7 @@
-package day2.instructions
+package day2.instructions.arithmetic
 
 import day2.IntcodeState
+import day2.instructions.Instruction
 
 object Multiplication extends Instruction {
   override val Opcode = 2
