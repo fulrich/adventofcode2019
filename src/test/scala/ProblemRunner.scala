@@ -1,12 +1,10 @@
-import java.io.{ByteArrayOutputStream, StringReader}
-
-import day1.{FuelCounterUpper, ModuleFueler, ShipModules}
-import day2.{ComputerTesting, IntcodeComputer, IntcodePrograms, IntcodeState, NounVerbFinder}
-import day3.{FuelManagementPanel, IntersectionClosestTo, Point, StepsClosestTo}
-import day4.PasswordDeterminer
-import day5.TestTerminalPrograms
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+import ship.ShipModules
+import ship.computer.{ComputerTesting, DiagnosticProgram, GravityAssistFinder, IntcodeComputer, IntcodePrograms}
+import ship.fuel.{FuelCounterUpper, FuelManagementPanel, ModuleFueler}
+import ship.panel.{IntersectionClosestTo, Point, StepsClosestTo}
+import venus.FuelDepot
 
 
 class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
@@ -39,10 +37,10 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   }
 
   test("Day 2 - Program 2: Fixing the Gravity Assist Program") {
-    val foundValue = NounVerbFinder.find()
+    val foundValue = GravityAssistFinder.find()
     foundValue shouldBe 5064
 
-    println(s"Day 2 - Problem 1 Answer: ${NounVerbFinder.find()}")
+    println(s"Day 2 - Problem 1 Answer: ${GravityAssistFinder.find()}")
   }
 
 
@@ -65,14 +63,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
 
   test("Day 4 - Problem 1 - Determine the Password for Venus Fuel Depot") {
-    val validPasswords = PasswordDeterminer.validPasswords()
+    val validPasswords = FuelDepot.validPasswords()
     validPasswords.length shouldBe 966
 
     println(s"Day 4 - Problem 1 Answer: ${validPasswords.length}")
   }
 
   test("Day 4 - Problem 2 - Determine the More Comprehensive Password for Venus Fuel Depot") {
-    val comprehensiveValidPasswords = PasswordDeterminer.validPasswords(onlyTwoAdjacent = true)
+    val comprehensiveValidPasswords = FuelDepot.validPasswords(onlyTwoAdjacent = true)
     comprehensiveValidPasswords.length shouldBe 628
 
     println(s"Day 4 - Problem 2 Answer: ${comprehensiveValidPasswords.length}")
@@ -80,7 +78,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
 
   test("Day 5 - Problem 1 - Run Diagnostic Tests on the Thermal Environment Supervision Terminal") {
-    val program = TestTerminalPrograms.diagnosticTests.get
+    val program = DiagnosticProgram.diagnosticTests.get
     val diagnosticCode = withIO("1") { IntcodeComputer.run(program) }.last
 
     diagnosticCode shouldBe 6731945
@@ -88,7 +86,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   }
 
   test("Day 5 - Problem 2 - Run Diagnostic Tests on the Thermal Radiator Controller") {
-    val program = TestTerminalPrograms.diagnosticTests.get
+    val program = DiagnosticProgram.diagnosticTests.get
     val diagnosticCode = withIO("5") { IntcodeComputer.run(program) }.last
 
     diagnosticCode shouldBe 9571668
