@@ -1,7 +1,7 @@
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
-import ship.computer.{ComputerTesting, DiagnosticProgram, GravityAssistFinder, IntcodeComputer, IntcodePrograms}
+import ship.computer.{ComputerTesting, DiagnosticProgram, GravityAssistFinder, IntcodeComputer, Programs}
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.panel.parts.Point
 import venus.FuelDepot
@@ -28,9 +28,9 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
 
   test("Day 2 - Program 1: Fixing the Gravity Assist Program") {
-    val gravityAssistProgram = IntcodePrograms.gravityAssist.get
+    val gravityAssistProgram = Programs.gravityAssist.get
     val gravityAssistLastState = gravityAssistProgram.set(1, 12).set(2, 2)
-    val gravityAssistOutput = IntcodeComputer.run(gravityAssistLastState).address(0)
+    val gravityAssistOutput = IntcodeComputer(gravityAssistLastState).execute().address(0)
     gravityAssistOutput shouldBe 5098658
 
     println(s"Day 2 - Problem 1 Answer: ${gravityAssistOutput}")
@@ -75,18 +75,20 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
 
   test("Day 5 - Problem 1 - Run Diagnostic Tests on the Thermal Environment Supervision Terminal") {
-    val program = DiagnosticProgram.diagnosticTests.get
-    val diagnosticCode = withIO("1") { IntcodeComputer.run(program) }.last
+    val diagnosticProgram = IntcodeComputer(DiagnosticProgram.diagnosticTests.get)
 
-    diagnosticCode shouldBe 6731945
-    println(s"Day 5 - Problem 1 Answer: $diagnosticCode")
+    diagnosticProgram.testInput(1).testOutput { diagnosticCodeList =>
+      diagnosticCodeList.last shouldBe 6731945
+      println(s"Day 5 - Problem 1 Answer: ${diagnosticCodeList.last}")
+    }
   }
 
   test("Day 5 - Problem 2 - Run Diagnostic Tests on the Thermal Radiator Controller") {
-    val program = DiagnosticProgram.diagnosticTests.get
-    val diagnosticCode = withIO("5") { IntcodeComputer.run(program) }.last
+    val diagnosticProgram = IntcodeComputer(DiagnosticProgram.diagnosticTests.get)
 
-    diagnosticCode shouldBe 9571668
-    println(s"Day 5 - Problem 1 Answer: $diagnosticCode")
+    diagnosticProgram.testInput(5).testOutput { diagnosticCodeList =>
+      diagnosticCodeList.last shouldBe 9571668
+      println(s"Day 5 - Problem 1 Answer: ${diagnosticCodeList.last}")
+    }
   }
 }

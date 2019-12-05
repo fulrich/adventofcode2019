@@ -6,7 +6,7 @@ import scala.io.Source
 import scala.util.Try
 
 
-object IntcodePrograms {
+object Programs {
   val GravityAssistProgram = "ship/computer/gravity_assist_program.txt"
   val Separator = ","
 

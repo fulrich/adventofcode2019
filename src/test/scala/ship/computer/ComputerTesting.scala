@@ -1,21 +1,38 @@
 package ship.computer
 
-import java.io.{ByteArrayOutputStream, StringReader}
+import ship.computer.internals.instructions.io.{InputSource, OutputSource}
+import ship.computer.internals.{ComputerConfiguration, IntcodeState}
+
+import scala.collection.mutable
 
 
 trait ComputerTesting {
-  def withInput[A](input: String)(test: => A): A =
-    Console.withIn(new StringReader(input)) {
-      test
-    }
+  class TestOutputSource extends OutputSource {
+    private val outputValue: mutable.ArrayBuffer[Int] = new mutable.ArrayBuffer[Int]()
 
-  def withOutput(test: => Unit): Seq[Int] = {
-    val output = new ByteArrayOutputStream()
-
-    Console.withOut(output) { test }
-
-    output.toString.split('\n').map(_.trim).map(_.toInt)
+    override def output(value: Int): Unit = outputValue.addOne(value)
+    def outputValues: Seq[Int] = outputValue.toVector
   }
 
-  def withIO(input: String)(test: => Unit): Seq[Int] = withInput(input) { withOutput(test) }
+  class TestInputSource(inputs: Seq[Int]) extends InputSource {
+    private val inputValues: mutable.ArrayBuffer[Int] = mutable.ArrayBuffer.from(inputs)
+
+    override def get(): Int = inputValues.remove(0)
+  }
+
+  implicit def toComputerTestExecution(computer: IntcodeComputer): ComputerTestExecution = ComputerTestExecution(computer)
+
+  case class ComputerTestExecution(computer: IntcodeComputer, input: Seq[Int] = Vector.empty) {
+    def testInput(value: Int*): ComputerTestExecution = copy(input = value.toVector)
+
+    def testOutput(testFunction: Seq[Int] => Unit): Unit = testExecute { (_, output) => testFunction(output) }
+
+    def testExecute(testFunction: (IntcodeState, Seq[Int]) => Unit): Unit = {
+      val testOutputSource = new TestOutputSource()
+      val testConfiguration = ComputerConfiguration(new TestInputSource(input), testOutputSource)
+      val testComputer = computer.copy(configuration = testConfiguration)
+      
+      testFunction(testComputer.execute(), testOutputSource.outputValues)
+    }
+  }
 }

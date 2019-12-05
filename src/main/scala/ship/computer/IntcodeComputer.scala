@@ -1,15 +1,16 @@
 package ship.computer
 
-import ship.computer.internals.IntcodeState
-import ship.computer.internals.instructions.Instructions
+import ship.computer.internals.instructions.InstructionSet
+import ship.computer.internals.{ComputerConfiguration, IntcodeState}
 
 import scala.annotation.tailrec
 
 
-object IntcodeComputer {
-  val ProgramCompleteOpcode = 99
+case class IntcodeComputer(initial: IntcodeState, configuration: ComputerConfiguration = ComputerConfiguration.Default) {
+  private lazy val instructionSet: InstructionSet = InstructionSet(configuration)
 
   @tailrec
-  def run(program: IntcodeState): IntcodeState =
-    if(program.isComplete) program else run(Instructions.execute(program))
+  final def execute(program: IntcodeState = initial): IntcodeState =
+    if(program.isComplete) program
+    else execute(instructionSet.execute(program))
 }

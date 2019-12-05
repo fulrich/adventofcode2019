@@ -9,11 +9,12 @@ object GravityAssistFinder {
   val VerbRange: Range = 0 to 99
 
   val SearchingFor = 19690720
-  val GravityAssistProgram: IntcodeState = IntcodePrograms.gravityAssist.get
+  val GravityAssistProgram: IntcodeState = Programs.gravityAssist.get
 
   @tailrec
   def find(noun: Int = 0, verb: Int = 0): Int = {
-    val result = IntcodeComputer.run(GravityAssistProgram.set(1, noun).set(2, verb))
+    val computer = IntcodeComputer(GravityAssistProgram.set(1, noun).set(2, verb))
+    val result = computer.execute()
 
     (noun, verb, result.address(0)) match {
       case (_, _, SearchingFor) => (100 * noun + verb)
