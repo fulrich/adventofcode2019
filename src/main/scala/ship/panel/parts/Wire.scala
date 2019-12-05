@@ -1,4 +1,4 @@
-package ship.panel
+package ship.panel.parts
 
 case class Wire(segments: Seq[Line] = Vector.empty) {
   lazy val allPoints: Seq[Point] =

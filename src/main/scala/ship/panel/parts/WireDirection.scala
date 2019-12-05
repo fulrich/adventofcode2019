@@ -1,4 +1,4 @@
-package ship.panel
+package ship.panel.parts
 
 sealed abstract class WireDirection {
   def distance: Int

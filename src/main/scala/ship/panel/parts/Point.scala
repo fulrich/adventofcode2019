@@ -1,4 +1,4 @@
-package ship.panel
+package ship.panel.parts
 
 case class Point(x: Int, y: Int) {
   def up(upIncrement: Int): Point = copy(y = y + upIncrement)

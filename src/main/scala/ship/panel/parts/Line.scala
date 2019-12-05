@@ -1,4 +1,4 @@
-package ship.panel
+package ship.panel.parts
 
 case class Line(point1: Point, point2: Point) {
   lazy val allPoints: Seq[Point] =

@@ -1,4 +1,4 @@
-package ship.panel
+package ship.panel.parts
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
