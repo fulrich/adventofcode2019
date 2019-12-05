@@ -7,12 +7,8 @@ object Addition extends Instruction {
   override val NumberOfParameters = 3
 
   def execute(program: IntcodeState): IntcodeState = {
-    val firstParameter = program.address(program.parameter(1))
-    val secondParameter = program.address(program.parameter(2))
-    val resultAddress = program.parameter(3)
-
     program
-      .set(resultAddress, firstParameter + secondParameter)
+      .set(program.parameter(3), program.parameter(1).value + program.parameter(2).value)
       .incrementInstructionPointer
   }
 }

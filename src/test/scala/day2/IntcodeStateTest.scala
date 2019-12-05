@@ -19,15 +19,10 @@ class IntcodeStateTest extends AnyFunSuite with Matchers {
 
   test("Can get the parameter values") {
     val program = IntcodeState(Vector(1, 5, 6, 0, 99, 10, 20))
-    val program2 = IntcodeState(Vector(1, 5, 6, 0, 99, 10, 20), 3)
 
-    program.parameter(1) shouldBe 5
-    program.parameter(2) shouldBe 6
-    program.parameter(3) shouldBe 0
-
-    program2.parameter(1) shouldBe 99
-    program2.parameter(2) shouldBe 10
-    program2.parameter(3) shouldBe 20
+    program.parameter(1) shouldBe Parameter(address = 5, value = 10)
+    program.parameter(2) shouldBe Parameter(address = 6, value = 20)
+    program.parameter(3) shouldBe Parameter(address = 0, value = 1)
   }
 
   test("Can get a specific address value") {
@@ -40,7 +35,7 @@ class IntcodeStateTest extends AnyFunSuite with Matchers {
 
   test("Can set a value in the intcode program") {
     val program = IntcodeState(Vector(1, 5, 6, 0, 99, 10, 20))
-    val updatedProgram = program.set(3, 100);
+    val updatedProgram = program.set(Parameter.atAddress(program, 3), 100);
 
     updatedProgram.memory shouldBe Vector(1, 5, 6, 100, 99, 10, 20)
   }

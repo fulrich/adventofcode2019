@@ -1,7 +1,10 @@
+import java.io.{ByteArrayOutputStream, StringReader}
+
 import day1.{FuelCounterUpper, ModuleFueler, ShipModules}
-import day2.{IntcodeComputer, IntcodePrograms, NounVerbFinder}
+import day2.{IntcodeComputer, IntcodePrograms, IntcodeState, NounVerbFinder}
 import day3.{FuelManagementPanel, IntersectionClosestTo, Point, StepsClosestTo}
 import day4.PasswordDeterminer
+import day5.TestTerminalPrograms
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -73,5 +76,21 @@ class ProblemRunner extends AnyFunSuite with Matchers {
     comprehensiveValidPasswords.length shouldBe 628
 
     println(s"Day 4 - Problem 2 Answer: ${comprehensiveValidPasswords.length}")
+  }
+
+
+  test("Day 5 - Problem 1 - Run Tests on Thermal Environment Supervision Terminal") {
+    val program = TestTerminalPrograms.diagnosticTests.get
+
+    val output = new ByteArrayOutputStream()
+    Console.withIn(new StringReader("1")) {
+      Console.withOut(output) {
+        IntcodeComputer.run(program)
+      }
+    }
+
+    val diagnostiCode = output.toString.trim.split('\n').last
+    diagnostiCode shouldBe "6731945"
+    println(s"Day 5 - Problem 1 Answer: $diagnostiCode")
   }
 }

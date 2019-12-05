@@ -6,12 +6,14 @@ object Instructions {
   val All: Seq[Instruction] = Vector(
     Addition,
     Multiplication,
-    Halt
+    Input,
+    Output,
+    Halt,
   )
 
   def execute(program: IntcodeState): IntcodeState =
     All.find(_.isExecutable(program)) match {
       case Some(instruction) =>instruction.execute(program)
-      case _ => program
+      case _ => Halt.execute(program)
     }
 }

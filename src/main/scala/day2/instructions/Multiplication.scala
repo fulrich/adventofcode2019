@@ -6,13 +6,8 @@ object Multiplication extends Instruction {
   override val Opcode = 2
   override val NumberOfParameters = 3
 
-  def execute(program: IntcodeState): IntcodeState = {
-    val firstParameter = program.address(program.parameter(1))
-    val secondParameter = program.address(program.parameter(2))
-    val resultAddress = program.parameter(3)
-
+  def execute(program: IntcodeState): IntcodeState =
     program
-      .set(resultAddress, firstParameter * secondParameter)
+      .set(program.parameter(3), program.parameter(1).value * program.parameter(2).value)
       .incrementInstructionPointer
-  }
 }
