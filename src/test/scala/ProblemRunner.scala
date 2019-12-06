@@ -1,3 +1,4 @@
+import mercury.OrbitalMap
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
@@ -90,5 +91,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
       diagnosticCodeList.last shouldBe 9571668
       println(s"Day 5 - Problem 1 Answer: ${diagnosticCodeList.last}")
     }
+  }
+
+
+  test("Day 6 - Problem 1 - Determine the total number of orbits in the Orbital Map") {
+    val orbitalMap = OrbitalMap.orbitalMap.get
+    val totalOrbits = orbitalMap.orbits
+    totalOrbits shouldBe 186597
+
+    println(s"Day 6 - Problem 1 Answer: $totalOrbits")
   }
 }
