@@ -1,20 +1,18 @@
 package mercury
 
-import ship.Module
-
 import scala.io.Source
 import scala.util.Try
 
-object OrbitalMap {
+
+object OrbitalMapBuilder {
   val CenterOfMass: SpaceObject = SpaceObject("COM")
   val OrbitalMapResource = "mercury/orbital_map.txt"
 
 
-  def orbitalMap: Try[SpaceObject] = orbitalMap(OrbitalMapResource)
+  def build: Try[SpaceObject] = build(OrbitalMapResource)
 
-  def orbitalMap(resourceName: String): Try[SpaceObject] =
+  def build(resourceName: String): Try[SpaceObject] =
     Try(build(Source.fromResource(resourceName).getLines.toVector))
-
 
 
   def build(orbitalRelationships: Seq[String]): SpaceObject = {

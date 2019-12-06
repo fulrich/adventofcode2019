@@ -1,8 +1,8 @@
-import mercury.OrbitalMap
+import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
-import ship.computer.{ComputerTesting, DiagnosticProgram, GravityAssistFinder, IntcodeComputer, Programs}
+import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.panel.parts.Point
 import venus.FuelDepot
@@ -95,10 +95,18 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
 
   test("Day 6 - Problem 1 - Determine the total number of orbits in the Orbital Map") {
-    val orbitalMap = OrbitalMap.orbitalMap.get
+    val orbitalMap = OrbitalMapBuilder.build.get
     val totalOrbits = orbitalMap.orbits
     totalOrbits shouldBe 186597
 
     println(s"Day 6 - Problem 1 Answer: $totalOrbits")
+  }
+
+  test("Day 6 - Problem 2 - Determine the number of jumps required to reach Santa") {
+    val orbitalMap = OrbitalMapBuilder.build.get
+    val transfersToSanta = OrbitalPathFinder.minimumTransfersBetween(orbitalMap)("YOU", "SAN")
+    transfersToSanta shouldBe 412
+
+    println(s"Day 6 - Problem 2 Answer: ${transfersToSanta}")
   }
 }
