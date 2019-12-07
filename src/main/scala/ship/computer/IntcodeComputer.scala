@@ -13,6 +13,8 @@ case class IntcodeComputer(initial: IntcodeState, configuration: ComputerConfigu
   final def execute(program: IntcodeState = initial): IntcodeState =
     if(program.isComplete) program
     else execute(instructionSet.execute(program))
+
+  def configure(configuration: ComputerConfiguration): IntcodeComputer = copy(configuration = configuration)
 }
 
 object IntcodeComputer {

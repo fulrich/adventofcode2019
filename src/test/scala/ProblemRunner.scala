@@ -5,6 +5,7 @@ import ship.ShipModules
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.panel.parts.Point
+import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
 
 
@@ -108,5 +109,12 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     transfersToSanta shouldBe 412
 
     println(s"Day 6 - Problem 2 Answer: ${transfersToSanta}")
+  }
+
+
+  test("Day 7 - Problem 1 - Find the amplifier signal to give the highest thruster boost") {
+    val amplifierResult = FindMaximumAmplifierSettings()
+
+    println(s"Day 7 - Problem 1 Answer: ${amplifierResult.result}")
   }
 }

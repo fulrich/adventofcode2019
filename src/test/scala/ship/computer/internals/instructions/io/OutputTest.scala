@@ -4,6 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import ship.computer.ComputerTesting
 import ship.computer.internals.IntcodeState
+import ship.computer.internals.instructions.io.OutputSource.ListOutputSource
 
 
 class OutputTest extends AnyFunSuite with Matchers with ComputerTesting {
@@ -11,9 +12,9 @@ class OutputTest extends AnyFunSuite with Matchers with ComputerTesting {
     val program = IntcodeState(4, 2, 99)
     val expected = IntcodeState(Vector(4, 2, 99), 2)
 
-    val output = new TestOutputSource()
+    val output = new ListOutputSource()
     Output(output).execute(program) shouldBe expected
 
-    output.outputValues.last shouldBe 99
+    output.output().last shouldBe 99
   }
 }
