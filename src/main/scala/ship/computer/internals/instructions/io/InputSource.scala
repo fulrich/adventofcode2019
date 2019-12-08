@@ -6,7 +6,6 @@ import scala.io.StdIn
 
 trait InputSource {
   def get(): Int
-
 }
 
 object InputSource {

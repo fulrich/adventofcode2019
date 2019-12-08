@@ -1,19 +1,19 @@
 package ship.thrusters.amplifiers
 
-import ship.computer.IntcodeComputer
+import ship.computer.IntcodeProgram
 
 import scala.annotation.tailrec
 
 
 object FindMaximumAmplifierSettings {
   val DefaultNumberOfAmplifiers = 5;
-  val DefaultProgram: IntcodeComputer = AmplificationProgram.controllerProgram.get
+  val DefaultProgram: IntcodeProgram = AmplificationProgram.controllerProgram.get
 
   val MinimumPhaseSetting = 0
   val MaximumPhaseSetting = 4
   val ValidValues: Seq[Int] = (MinimumPhaseSetting to MaximumPhaseSetting).toVector
 
-  def apply(controlProgram: IntcodeComputer = DefaultProgram, numberOfAmplifiers: Int = DefaultNumberOfAmplifiers): AmplifierResult =
+  def apply(controlProgram: IntcodeProgram = DefaultProgram, numberOfAmplifiers: Int = DefaultNumberOfAmplifiers): AmplifierResult =
     possibleAmplifierSettings(numberOfAmplifiers).foldLeft(AmplifierResult()) { (result, amplifierSettings) =>
       result.max(AmplifierSeries(amplifierSettings, controlProgram).run())
     }

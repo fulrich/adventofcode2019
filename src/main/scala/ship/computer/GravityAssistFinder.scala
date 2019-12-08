@@ -1,6 +1,6 @@
 package ship.computer
 
-import ship.computer.internals.IntcodeState
+import ship.computer.internals.MemoryManagement
 
 import scala.annotation.tailrec
 
@@ -9,11 +9,11 @@ object GravityAssistFinder {
   val VerbRange: Range = 0 to 99
 
   val SearchingFor = 19690720
-  val GravityAssistProgram: IntcodeState = Programs.gravityAssist.get
+  val GravityAssistProgram: IntcodeProgram = Programs.gravityAssist.get
 
   @tailrec
   def find(noun: Int = 0, verb: Int = 0): Int = {
-    val computer = IntcodeComputer(GravityAssistProgram.set(1, noun).set(2, verb))
+    val computer = GravityAssistProgram.set(1, noun).set(2, verb)
     val result = computer.execute()
 
     (noun, verb, result.address(0)) match {

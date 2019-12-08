@@ -1,7 +1,6 @@
 package ship.thrusters.amplifiers
 
-import ship.computer.IntcodeComputer
-import ship.computer.internals.IntcodeState
+import ship.computer.IntcodeProgram
 
 import scala.io.Source
 import scala.util.Try
@@ -12,12 +11,10 @@ object AmplificationProgram {
     val Separator = ","
 
 
-    def controllerProgram: Try[IntcodeComputer] = from(AmplificationProgram).map(IntcodeComputer.apply(_))
+    def controllerProgram: Try[IntcodeProgram] = from(AmplificationProgram)
 
-    def controllerSoftware: Try[IntcodeState] = from(AmplificationProgram)
-
-    def from(resourceName: String): Try[IntcodeState] =
-      raw(resourceName).map(intcode => IntcodeState(intcode))
+    def from(resourceName: String): Try[IntcodeProgram] =
+      raw(resourceName).map(intcode => IntcodeProgram(intcode))
 
     def raw(resourceName: String): Try[Seq[Int]] =
       Try(Source.fromResource(resourceName).getLines.mkString.split(Separator).map(_.toInt))

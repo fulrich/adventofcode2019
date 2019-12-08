@@ -1,5 +1,7 @@
 package ship.computer.internals
 
+import ship.computer.IntcodeProgram
+
 case class Parameter(address: Int, value: Int) {
   def + (parameter: Parameter): Int = value + parameter.value
   def * (parameter: Parameter): Int = value * parameter.value
@@ -13,19 +15,19 @@ object Parameter {
   val UnknownParameter: Parameter = Parameter(-1, -1)
 
 
-  def positionMode(program: IntcodeState, parameterNumber: Int): Parameter =
+  def positionMode(program: IntcodeProgram, parameterNumber: Int): Parameter =
     at(program, program.address(program.instructionPointer + parameterNumber))
 
-  def immediateMode(program: IntcodeState, parameterNumber: Int): Parameter =
+  def immediateMode(program: IntcodeProgram, parameterNumber: Int): Parameter =
     at(program, program.instructionPointer + parameterNumber)
 
-  def at(program: IntcodeState, address: Int): Parameter = Parameter(address, program.address(address))
+  def at(program: MemoryManagement, address: Int): Parameter = Parameter(address, program.address(address))
 
 
-  def apply(program: IntcodeState, parameterNumber: Int): Parameter =
-    program.opcodeInstruction.map(_.parameterMode(parameterNumber)) match {
-      case Some(0) => positionMode(program, parameterNumber)
-      case Some(1) => immediateMode(program, parameterNumber)
+  def apply(program: IntcodeProgram, parameterNumber: Int): Parameter =
+    program.parameterMode(parameterNumber) match {
+      case 0 => positionMode(program, parameterNumber)
+      case 1 => immediateMode(program, parameterNumber)
       case _ => UnknownParameter
     }
 }

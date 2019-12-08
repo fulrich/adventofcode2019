@@ -3,13 +3,13 @@ package ship.computer.internals
 import ship.computer.internals.instructions.io.{InputSource, OutputSource}
 
 
-case class ComputerConfiguration(
+case class Configuration(
   inputSource: InputSource,
   outputSource: OutputSource
 )
 
-object ComputerConfiguration {
-  val Default: ComputerConfiguration = ComputerConfiguration(
+object Configuration {
+  val Default: Configuration = Configuration(
     InputSource.StandardIn,
     OutputSource.StandardOut
   )

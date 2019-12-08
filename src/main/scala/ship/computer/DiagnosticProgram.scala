@@ -1,7 +1,5 @@
 package ship.computer
 
-import ship.computer.internals.IntcodeState
-
 import scala.io.Source
 import scala.util.Try
 
@@ -11,10 +9,10 @@ object DiagnosticProgram {
   val Separator = ","
 
 
-  def diagnosticTests: Try[IntcodeState] = from(TestTerminalProgram)
+  def diagnosticTests: Try[IntcodeProgram] = from(TestTerminalProgram)
 
-  def from(resourceName: String): Try[IntcodeState] =
-    raw(resourceName).map(intcode => IntcodeState(intcode))
+  def from(resourceName: String): Try[IntcodeProgram] =
+    raw(resourceName).map(intcode => IntcodeProgram(intcode))
 
   def raw(resourceName: String): Try[Seq[Int]] =
     Try(Source.fromResource(resourceName).getLines.mkString.split(Separator).map(_.toInt))
