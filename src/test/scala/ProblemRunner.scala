@@ -1,3 +1,4 @@
+import mars.{RoverPassword, SpaceImageChecksum}
 import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -123,6 +124,15 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val amplifierResult = FindMaximumAmplifierSettings.looped()
     amplifierResult.result shouldBe 8271623
 
-    println(s"Day 7 - Problem 1 Answer: ${amplifierResult.result}")
+    println(s"Day 7 - Problem 2 Answer: ${amplifierResult.result}")
+  }
+
+
+  test("Day 8 - Problem 1 - Find the checksum of the space image for the Mars Rover") {
+    val spaceImage = RoverPassword.Image.get
+    val checksum = SpaceImageChecksum(spaceImage)
+
+
+    println(s"Day 8 - Problem 1 Answer: $checksum")
   }
 }
