@@ -1,9 +1,8 @@
 package ship.computer
 
-import ship.computer.internals.instructions.io.InputSource.ListInputSource
-import ship.computer.internals.instructions.io.OutputSource.ListOutputSource
-import ship.computer.internals.{Configuration, MemoryManagement}
-import language.implicitConversions
+import ship.computer.internals.Configuration
+
+import scala.language.implicitConversions
 
 
 trait ComputerTesting {
@@ -15,12 +14,11 @@ trait ComputerTesting {
     def testOutput(testFunction: Seq[Int] => Unit): Unit = testExecute { (_, output) => testFunction(output) }
 
     def testExecute(testFunction: (IntcodeProgram, Seq[Int]) => Unit): Unit = {
-      val testOutputSource = ListOutputSource()
-      val testConfiguration = Configuration(ListInputSource(input), testOutputSource)
+      val testConfiguration = Configuration.static(input)
       val testComputer = computer.copy(configuration = testConfiguration)
       val postTestComputer = testComputer.execute()
 
-      testFunction(postTestComputer, testOutputSource.output())
+      testFunction(postTestComputer, testConfiguration.output.trackedOutput)
     }
   }
 }

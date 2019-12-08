@@ -2,6 +2,8 @@ package ship.computer
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+import ship.computer.internals.Configuration
+import ship.computer.internals.instructions.io.Input
 
 class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting {
   test("Can handle simple addition intcode programs") {
@@ -77,5 +79,16 @@ class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting 
     isEqualTo8.testInput(6).testOutput { output => output.last shouldBe 1 }
     isEqualTo8.testInput(8).testOutput { output => output.last shouldBe 0 }
     isEqualTo8.testInput(10).testOutput { output => output.last shouldBe 0 }
+  }
+
+  test("When running with single inputs will pause the execution while waiting for the next input") {
+    val configuration = Configuration.singleInput
+    val program = IntcodeProgram.load(3, 0, 99).configure(configuration)
+
+    val pausedProgram = program.execute()
+    pausedProgram shouldBe program.startWaiting
+
+    val continuedWithInput = pausedProgram.continue(55)
+    continuedWithInput shouldBe IntcodeProgram(Vector(55, 0, 99), 2).completed.configure(Configuration.singleInput)
   }
 }

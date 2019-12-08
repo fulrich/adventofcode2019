@@ -4,7 +4,7 @@ import ship.computer.internals.Configuration
 
 object IoInstructionSet {
   def apply(configuration: Configuration) = Vector(
-    Input(configuration.inputSource),
-    Output(configuration.outputSource)
+    configuration.input,
+    configuration.output
   )
 }

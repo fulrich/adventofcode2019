@@ -20,7 +20,7 @@ case class IntcodeProgram(
 
   @tailrec
   final def execute(program: IntcodeProgram = this): IntcodeProgram =
-    if(program.isComplete) program
+    if(program.shouldStop) program
     else execute(instructionSet.execute(program))
 
   def configure(configuration: Configuration): IntcodeProgram = copy(configuration = configuration)

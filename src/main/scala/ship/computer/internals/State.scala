@@ -1,7 +1,8 @@
 package ship.computer.internals
 
 case class State (
-  isComplete: Boolean = false
+  isComplete: Boolean = false,
+  isWaiting: Boolean = false
 )
 
 object State {
