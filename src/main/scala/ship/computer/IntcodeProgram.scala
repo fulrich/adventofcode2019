@@ -2,6 +2,7 @@ package ship.computer
 
 import ship.computer.internals.instructions.InstructionSet
 import ship.computer.internals._
+import ship.computer.internals.instructions.io.Input
 
 import scala.annotation.tailrec
 
@@ -18,14 +19,18 @@ case class IntcodeProgram(
 
   private lazy val instructionSet: InstructionSet = InstructionSet(configuration)
 
-  @tailrec
-  final def execute(program: IntcodeProgram = this): IntcodeProgram =
-    if(program.shouldStop) program
-    else execute(instructionSet.execute(program))
 
-  def configure(configuration: Configuration): IntcodeProgram = copy(configuration = configuration)
+  final def start(): IntcodeProgram = IntcodeProgram.execute(this)
+  def continue(input: Int): IntcodeProgram =
+    if(state.isWaiting) stopWaiting.setInput(Input.NextInput(input)).start()
+    else this
 }
 
 object IntcodeProgram {
   def load(intcodes: Int*): IntcodeProgram = IntcodeProgram(intcodes.toVector)
+
+  @tailrec
+  final def execute(program: IntcodeProgram): IntcodeProgram =
+    if(program.shouldStop) program
+    else execute(program.instructionSet.execute(program))
 }

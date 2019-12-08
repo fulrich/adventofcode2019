@@ -32,7 +32,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
   test("Day 2 - Program 1: Fixing the Gravity Assist Program") {
     val gravityAssistProgram = Programs.gravityAssist.get
     val gravityAssistLastState = gravityAssistProgram.set(1, 12).set(2, 2)
-    val gravityAssistOutput = gravityAssistLastState.execute().address(0)
+    val gravityAssistOutput = gravityAssistLastState.start().address(0)
     gravityAssistOutput shouldBe 5098658
 
     println(s"Day 2 - Problem 1 Answer: ${gravityAssistOutput}")
@@ -114,6 +114,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
   test("Day 7 - Problem 1 - Find the amplifier signal to give the highest thruster boost") {
     val amplifierResult = FindMaximumAmplifierSettings()
+    amplifierResult.result shouldBe 24405
+
+    println(s"Day 7 - Problem 1 Answer: ${amplifierResult.result}")
+  }
+
+  test("Day 7 - Problem 2 - Find the amplifier signal to give the highest thruster boost using a looped configuration") {
+    val amplifierResult = FindMaximumAmplifierSettings.looped()
+    amplifierResult.result shouldBe 8271623
 
     println(s"Day 7 - Problem 1 Answer: ${amplifierResult.result}")
   }

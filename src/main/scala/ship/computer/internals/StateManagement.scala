@@ -1,7 +1,6 @@
 package ship.computer.internals
 
 import ship.computer.IntcodeProgram
-import ship.computer.internals.instructions.io.Input
 
 
 trait StateManagement { self: IntcodeProgram =>
@@ -14,8 +13,4 @@ trait StateManagement { self: IntcodeProgram =>
 
   def shouldContinue: Boolean = !shouldStop
   def shouldStop: Boolean = state.isComplete || state.isWaiting
-
-  def continue(input: Int): IntcodeProgram =
-    if(state.isWaiting) stopWaiting.setInput(Input.NextInput(input)).execute()
-    else self
 }

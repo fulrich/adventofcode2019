@@ -14,7 +14,7 @@ object GravityAssistFinder {
   @tailrec
   def find(noun: Int = 0, verb: Int = 0): Int = {
     val computer = GravityAssistProgram.set(1, noun).set(2, verb)
-    val result = computer.execute()
+    val result = computer.start()
 
     (noun, verb, result.address(0)) match {
       case (_, _, SearchingFor) => (100 * noun + verb)

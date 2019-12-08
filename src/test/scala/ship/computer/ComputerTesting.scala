@@ -16,7 +16,7 @@ trait ComputerTesting {
     def testExecute(testFunction: (IntcodeProgram, Seq[Int]) => Unit): Unit = {
       val testConfiguration = Configuration.static(input)
       val testComputer = computer.copy(configuration = testConfiguration)
-      val postTestComputer = testComputer.execute()
+      val postTestComputer = testComputer.start()
 
       testFunction(postTestComputer, testConfiguration.output.trackedOutput)
     }

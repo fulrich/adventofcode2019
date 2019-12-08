@@ -10,35 +10,35 @@ class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting 
     val program = IntcodeProgram.load(1, 0, 0, 0, 99)
     val output = Vector(2, 0, 0, 0, 99)
 
-    program.execute().memory shouldBe output
+    program.start().memory shouldBe output
   }
 
   test("Can handle simple multiplication intcode programs") {
     val program = IntcodeProgram.load(2, 3, 0, 3, 99)
     val output = Vector(2, 3, 0, 6, 99)
 
-    program.execute().memory shouldBe output
+    program.start().memory shouldBe output
   }
 
   test("Can handle complex multiplication intcode programs") {
     val program = IntcodeProgram.load(2, 4, 4, 5, 99, 0)
     val output = Vector(2, 4, 4, 5, 99, 9801)
 
-    program.execute().memory shouldBe output
+    program.start().memory shouldBe output
   }
 
   test("Can handle complex intcode programs") {
     val program = IntcodeProgram.load(1, 1, 1, 4, 99, 5, 6, 0, 99)
     val output = Vector(30, 1, 1, 4, 2, 5, 6, 0, 99)
 
-    program.execute().memory shouldBe output
+    program.start().memory shouldBe output
   }
 
   test("Can handle different modes of parameters") {
     val program = IntcodeProgram.load(1002, 4, 3, 4, 33)
     val output = Vector(1002, 4, 3, 4, 99)
 
-    program.execute().memory shouldBe output
+    program.start().memory shouldBe output
   }
 
   test("Can run an input and output program") {
@@ -85,10 +85,22 @@ class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting 
     val configuration = Configuration.singleInput
     val program = IntcodeProgram.load(3, 0, 99).configure(configuration)
 
-    val pausedProgram = program.execute()
+    val pausedProgram = program.start()
     pausedProgram shouldBe program.startWaiting
 
     val continuedWithInput = pausedProgram.continue(55)
     continuedWithInput shouldBe IntcodeProgram(Vector(55, 0, 99), 2).completed.configure(Configuration.singleInput)
+  }
+
+  test("When a program needs two inputs it will wait twice") {
+    val configuration = Configuration.singleInput(55)
+    val program = IntcodeProgram.load(3, 0, 3, 2, 99).configure(configuration)
+
+    val firstInputProvided = program.start()
+    firstInputProvided shouldBe program.set(0, 55).startWaiting.setInstructionPointer(2).setInput(Input.NeedInput)
+
+    val secondInputProvided = firstInputProvided.continue(200)
+    val secondExpected = firstInputProvided.set(2, 200).completed.stopWaiting.setInput(Input.NeedInput).setInstructionPointer(4)
+    secondInputProvided shouldBe secondExpected
   }
 }

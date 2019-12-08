@@ -1,14 +1,14 @@
 package ship.thrusters.amplifiers
 
 import ship.computer.IntcodeProgram
-import ship.computer.internals.Configuration
 
 
-case class Amplifier(phaseSetting: Int, amplificationProgram: IntcodeProgram) {
-  def run(input: Int = 0): Int = {
-    val configuration = Configuration.static(Vector(phaseSetting, input))
+case class Amplifier(phaseSetting: Int, var amplificationProgram: IntcodeProgram) {
+  def lastOutput: Int = amplificationProgram.configuration.output.trackedOutput.last
+  def isComplete: Boolean = amplificationProgram.state.isComplete
 
-    amplificationProgram.configure(configuration).execute()
-    configuration.output.trackedOutput.last
+  def run(input: Int = 0): Amplifier = {
+    amplificationProgram = amplificationProgram.continue(input)
+    this
   }
 }
