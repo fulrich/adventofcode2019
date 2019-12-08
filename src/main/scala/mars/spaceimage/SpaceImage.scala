@@ -5,6 +5,11 @@ case class SpaceImage(layers: Seq[LayerData]) {
 
   def layerWithFewest(digit: Int): LayerData =
     layers.min(Ordering.by((layer: LayerData) => layer.numberOfDigits(digit)))
+
+  def overlay: LayerData =
+    layers.tail.foldLeft(layers.head) { case (overlayLayer, nextLayer) =>
+      overlayLayer.overlay(nextLayer)
+    }
 }
 
 object SpaceImage {

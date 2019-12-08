@@ -7,7 +7,6 @@ import ship.computer.IntcodeProgram
 
 class InstructionControlTest extends AnyFunSuite with Matchers {
   test("Should be able to correctly determine the Opcode") {
-    println(IntcodeProgram.load(1))
     IntcodeProgram.load(1).opcode shouldBe 1
     IntcodeProgram.load(12).opcode shouldBe 12
     IntcodeProgram.load(102).opcode shouldBe 2

@@ -10,14 +10,16 @@ import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
 
 
-class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
+class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with ProblemPrinter {
+  val OutputAnswers = false
+
   test("Day 1 - Problem 1: How much fuel for all modules") {
     val modules = ShipModules.modules.get
     val fueledModules = ModuleFueler.fuelUpModulesIgnoringFuelWeight(modules)
     val requiredFuel = FuelCounterUpper.countTotalFuel(fueledModules)
     requiredFuel shouldBe 3497399
 
-    println(s"Day 1 - Problem 1 Answer: ${requiredFuel}")
+    printAnswer(day = 1, problem = 1, requiredFuel)
   }
 
   test("Day 1 - Problem 2: How much fuel accounting for fuel weight") {
@@ -26,7 +28,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val requiredFuel = FuelCounterUpper.countTotalFuel(fueledModules)
     requiredFuel shouldBe 5243207
 
-    println(s"Day 1 - Problem 2 Answer: ${requiredFuel}")
+    printAnswer(day = 1, problem = 2, requiredFuel)
   }
 
 
@@ -36,14 +38,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val gravityAssistOutput = gravityAssistLastState.start().address(0)
     gravityAssistOutput shouldBe 5098658
 
-    println(s"Day 2 - Problem 1 Answer: ${gravityAssistOutput}")
+    printAnswer(day = 2, problem = 1, gravityAssistOutput)
   }
 
   test("Day 2 - Program 2: Fixing the Gravity Assist Program") {
     val foundValue = GravityAssistFinder.find()
     foundValue shouldBe 5064
 
-    println(s"Day 2 - Problem 1 Answer: ${GravityAssistFinder.find()}")
+    printAnswer(day = 2, problem = 2, foundValue)
   }
 
 
@@ -51,14 +53,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val wirePanel = FuelManagement.Panel.get
     val distanceToCentralPort = wirePanel.minimumDistanceTo(Point.CentralPort) shouldBe 316
 
-    println(s"Day 3 - Problem 1 Answer: $distanceToCentralPort")
+    printAnswer(day = 3, problem = 1, distanceToCentralPort)
   }
 
   test("Day 3 - Problem 2 - Fix the Fuel Management System Finding Minimum Number of Steps") {
     val wirePanel = FuelManagement.Panel.get
     wirePanel.minimalSteps shouldBe 16368
 
-    println(s"Day 3 - Problem 2 Answer: ${wirePanel.minimalSteps}")
+    printAnswer(day = 3, problem = 2, wirePanel.minimalSteps)
   }
 
 
@@ -66,14 +68,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val validPasswords = FuelDepot.validPasswords()
     validPasswords.length shouldBe 966
 
-    println(s"Day 4 - Problem 1 Answer: ${validPasswords.length}")
+    printAnswer(day = 4, problem = 1, validPasswords.length)
   }
 
   test("Day 4 - Problem 2 - Determine the More Comprehensive Password for Venus Fuel Depot") {
     val comprehensiveValidPasswords = FuelDepot.validPasswords(onlyTwoAdjacent = true)
     comprehensiveValidPasswords.length shouldBe 628
 
-    println(s"Day 4 - Problem 2 Answer: ${comprehensiveValidPasswords.length}")
+    printAnswer(day = 4, problem = 2, comprehensiveValidPasswords.length)
   }
 
 
@@ -82,7 +84,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
     diagnosticProgram.testInput(1).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 6731945
-      println(s"Day 5 - Problem 1 Answer: ${diagnosticCodeList.last}")
+      printAnswer(day = 5, problem = 1, diagnosticCodeList.last)
     }
   }
 
@@ -91,7 +93,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
 
     diagnosticProgram.testInput(5).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 9571668
-      println(s"Day 5 - Problem 1 Answer: ${diagnosticCodeList.last}")
+      printAnswer(day = 5, problem = 2, diagnosticCodeList.last)
     }
   }
 
@@ -101,7 +103,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val totalOrbits = orbitalMap.orbits
     totalOrbits shouldBe 186597
 
-    println(s"Day 6 - Problem 1 Answer: $totalOrbits")
+    printAnswer(day = 6, problem = 1, totalOrbits)
   }
 
   test("Day 6 - Problem 2 - Determine the number of jumps required to reach Santa") {
@@ -109,7 +111,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val transfersToSanta = OrbitalPathFinder.minimumTransfersBetween(orbitalMap)("YOU", "SAN")
     transfersToSanta shouldBe 412
 
-    println(s"Day 6 - Problem 2 Answer: ${transfersToSanta}")
+    printAnswer(day = 6, problem = 2, transfersToSanta)
   }
 
 
@@ -117,14 +119,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val amplifierResult = FindMaximumAmplifierSettings()
     amplifierResult.result shouldBe 24405
 
-    println(s"Day 7 - Problem 1 Answer: ${amplifierResult.result}")
+    printAnswer(day = 7, problem = 1, amplifierResult.result)
   }
 
   test("Day 7 - Problem 2 - Find the amplifier signal to give the highest thruster boost using a looped configuration") {
     val amplifierResult = FindMaximumAmplifierSettings.looped()
     amplifierResult.result shouldBe 8271623
 
-    println(s"Day 7 - Problem 2 Answer: ${amplifierResult.result}")
+    printAnswer(day = 7, problem = 2, amplifierResult.result)
   }
 
 
@@ -132,7 +134,18 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting {
     val spaceImage = RoverPassword.Image.get
     val checksum = SpaceImageChecksum(spaceImage)
 
-
-    println(s"Day 8 - Problem 1 Answer: $checksum")
+    printAnswer(day = 8, problem = 1, checksum)
   }
+
+  test("Day 8 - Problem 2 - Find the overlay of all layers and print it to view the password") {
+    val spaceImage = RoverPassword.Image.get
+
+    printAnswer(day = 8, problem = 2) {
+      spaceImage.overlay.print()
+    }
+  }
+
+
+
+
 }
