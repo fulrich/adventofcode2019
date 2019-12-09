@@ -8,6 +8,8 @@ trait StateManagement { self: IntcodeProgram =>
 
   def completed: IntcodeProgram = state(_.copy(isComplete = true))
 
+  def relativeBase(newRelativeBase: Int): IntcodeProgram = state(_.copy(relativeBase = newRelativeBase))
+
   def startWaiting: IntcodeProgram = state(_.copy(isWaiting = true))
   def stopWaiting: IntcodeProgram = state(_.copy(isWaiting = false))
 

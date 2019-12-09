@@ -3,6 +3,7 @@ package ship.computer.internals
 case class State (
   isComplete: Boolean = false,
   isWaiting: Boolean = false,
+  relativeBase: Int = 0,
   error: Option[String] = None
 )
 
