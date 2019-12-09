@@ -103,4 +103,12 @@ class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting 
     val secondExpected = firstInputProvided.set(2, 200).completed.stopWaiting.setInput(Input.NeedInput).setInstructionPointer(4)
     secondInputProvided shouldBe secondExpected
   }
+
+  test("Can track when an error occurrs") {
+    val program = IntcodeProgram.load(20, 0, 3, 2, 99)
+    val result = program.start()
+
+    result.hasFault shouldBe true
+    result.state.error should contain ("Unknown Opcode Instruction: 20")
+  }
 }

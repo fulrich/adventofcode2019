@@ -11,6 +11,9 @@ trait StateManagement { self: IntcodeProgram =>
   def startWaiting: IntcodeProgram = state(_.copy(isWaiting = true))
   def stopWaiting: IntcodeProgram = state(_.copy(isWaiting = false))
 
+  def fault(newError: String): IntcodeProgram = state(_.copy(error = Some(newError)))
+  def hasFault: Boolean = state.error.isDefined
+
   def shouldContinue: Boolean = !shouldStop
-  def shouldStop: Boolean = state.isComplete || state.isWaiting
+  def shouldStop: Boolean = state.isComplete || state.isWaiting || hasFault
 }

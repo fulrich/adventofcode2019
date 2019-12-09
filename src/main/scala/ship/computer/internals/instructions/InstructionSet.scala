@@ -18,6 +18,6 @@ case class InstructionSet(configuration: Configuration) {
   def execute(program: IntcodeProgram): IntcodeProgram =
     all.find(_.isExecutable(program)) match {
       case Some(instruction) => instruction.execute(program)
-      case _ => Halt.execute(program)
+      case _ => program.fault(s"Unknown Opcode Instruction: ${program.opcode}")
     }
 }
