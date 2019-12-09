@@ -80,7 +80,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
 
   test("Day 5 - Problem 1 - Run Diagnostic Tests on the Thermal Environment Supervision Terminal") {
-    val diagnosticProgram = DiagnosticProgram.diagnosticTests.get
+    val diagnosticProgram = Programs.diagnostics.get
 
     diagnosticProgram.testInput(1).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 6731945
@@ -89,7 +89,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
   }
 
   test("Day 5 - Problem 2 - Run Diagnostic Tests on the Thermal Radiator Controller") {
-    val diagnosticProgram = DiagnosticProgram.diagnosticTests.get
+    val diagnosticProgram = Programs.diagnostics.get
 
     diagnosticProgram.testInput(5).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 9571668
@@ -146,6 +146,23 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
   }
 
 
+  test("Day 9 - Problem 1 - Should output a single value from the BOOST program in test mode") {
+    val boostProgram = Programs.boost.get
 
+    boostProgram.testInput(1).testExecute { (program, boostTestResult) =>
+      program.state.isComplete shouldBe true
+      boostTestResult.last shouldBe 2671328082L
+      printAnswer(day = 9, problem = 1, boostTestResult.last)
+    }
+  }
 
+  test("Day 9 - Problem 2 - Using the BOOST program can find the coordinates of the distress signal") {
+    val boostProgram = Programs.boost.get
+
+    boostProgram.testInput(2).testExecute { (program, boostTestResult) =>
+      program.state.isComplete shouldBe true
+      boostTestResult.last shouldBe 59095
+      printAnswer(day = 9, problem = 2, boostTestResult.last)
+    }
+  }
 }

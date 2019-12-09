@@ -12,4 +12,11 @@ class AdjustRelativeBaseTest extends AnyFunSuite with Matchers {
 
     AdjustRelativeBase.execute(program) shouldBe expected
   }
+
+  test("Can adjust the relative pointer back down") {
+    val program = IntcodeProgram.load(AdjustRelativeBase.Opcode, 3, 99, -7).relativeBase(50)
+    val expected = program.relativeBase(43).setInstructionPointer(2)
+
+    AdjustRelativeBase.execute(program) shouldBe expected
+  }
 }

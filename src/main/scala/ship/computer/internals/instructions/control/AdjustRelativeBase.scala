@@ -5,10 +5,10 @@ import ship.computer.internals.instructions.Instruction
 
 
 object AdjustRelativeBase extends Instruction {
-  override val Opcode: Int = 9
-  override val NumberOfParameters: Int = 1
+  override val Opcode = 9
+  override val NumberOfParameters = 1
 
   override def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
-    program.relativeBase(program.parameterOne.value)
+    program.relativeBase(program.state.relativeBase + program.parameterOne.value)
   }
 }

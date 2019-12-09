@@ -8,8 +8,8 @@ import scala.annotation.tailrec
 
 
 case class IntcodeProgram(
-  memory: Seq[Int],
-  instructionPointer: Int = 0,
+  memory: Seq[Long],
+  instructionPointer: Long = 0,
   state: State = State.Initial,
   configuration: Configuration = Configuration.Default)
     extends MemoryManagement
@@ -21,13 +21,13 @@ case class IntcodeProgram(
 
 
   final def start(): IntcodeProgram = IntcodeProgram.execute(this)
-  def continue(input: Int): IntcodeProgram =
+  def continue(input: Long): IntcodeProgram =
     if(state.isWaiting) stopWaiting.setInput(Input.NextInput(input)).start()
     else this
 }
 
 object IntcodeProgram {
-  def load(intcodes: Int*): IntcodeProgram = IntcodeProgram(intcodes.toVector)
+  def load(intcodes: Long*): IntcodeProgram = IntcodeProgram(intcodes.toVector)
 
   @tailrec
   final def execute(program: IntcodeProgram): IntcodeProgram =

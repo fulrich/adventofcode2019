@@ -8,8 +8,8 @@ import scala.io.StdIn
 
 
 trait Input extends Instruction {
-  override val Opcode: Int = 3
-  override val NumberOfParameters: Int = 1
+  override val Opcode = 3
+  override val NumberOfParameters = 1
 }
 
 object Input {
@@ -19,8 +19,8 @@ object Input {
     }
   }
 
-  case class Static(inputs: Seq[Int]) extends Input {
-    private val inputValues: mutable.ArrayBuffer[Int] = mutable.ArrayBuffer.from(inputs)
+  case class Static(inputs: Seq[Long]) extends Input {
+    private val inputValues: mutable.ArrayBuffer[Long] = mutable.ArrayBuffer.from(inputs)
 
     override def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
       program.set(program.parameterOne, inputValues.remove(0))
@@ -32,7 +32,7 @@ object Input {
     override def execute(program: IntcodeProgram): IntcodeProgram = program.startWaiting
   }
 
-  case class NextInput(input: Int) extends Input {
+  case class NextInput(input: Long) extends Input {
     override def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
       program
         .setInput(NeedInput)

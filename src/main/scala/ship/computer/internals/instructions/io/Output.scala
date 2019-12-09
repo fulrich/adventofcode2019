@@ -7,10 +7,10 @@ import scala.collection.mutable
 
 
 trait Output extends Instruction {
-  override val Opcode: Int = 4
-  override val NumberOfParameters: Int = 1
+  override val Opcode = 4
+  override val NumberOfParameters = 1
 
-  def trackedOutput: Seq[Int] = Vector.empty
+  def trackedOutput: Seq[Long] = Vector.empty
 }
 
 object Output {
@@ -22,13 +22,13 @@ object Output {
   }
 
   case class Collection() extends Output {
-    private val outputValue: mutable.ArrayBuffer[Int] = new mutable.ArrayBuffer[Int]()
+    private val outputValue: mutable.ArrayBuffer[Long] = new mutable.ArrayBuffer[Long]()
 
     override def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
       outputValue.addOne(program.parameterOne.value)
       program
     }
 
-    override def trackedOutput: Seq[Int] = outputValue.toVector
+    override def trackedOutput: Seq[Long] = outputValue.toVector
   }
 }

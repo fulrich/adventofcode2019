@@ -18,13 +18,13 @@ class MemoryManagementTest extends AnyFunSuite with Matchers {
     program.moveInstructionPointer(4).opcode shouldBe 99
   }
 
-  test("Can get the parameter values") {
-    val program = IntcodeProgram(Vector(1, 5, 6, 0, 99, 10, 20))
-
-    program.parameter(1) shouldBe Parameter(address = 5, value = 10)
-    program.parameter(2) shouldBe Parameter(address = 6, value = 20)
-    program.parameter(3) shouldBe Parameter(address = 0, value = 1)
-  }
+//  test("Can get the parameter values") {
+//    val program = IntcodeProgram(Vector(1, 5, 6, 0, 99, 10, 20))
+//
+//    program.parameter(1) shouldBe Parameter(address = 5, value = 10)
+//    program.parameter(2) shouldBe Parameter(address = 6, value = 20)
+//    program.parameter(3) shouldBe Parameter(address = 0, value = 1)
+//  }
 
   test("Can get a specific address value") {
     val program = IntcodeProgram(Vector(1, 5, 6, 0, 99, 10, 20))

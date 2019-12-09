@@ -5,11 +5,11 @@ import ship.computer.internals.Parameter
 
 
 trait Instruction {
-  val True: Int = 1
-  val False: Int = 0
+  val True: Long = 1
+  val False: Long = 0
 
-  def Opcode: Int
-  def NumberOfParameters: Int
+  def Opcode: Long
+  def NumberOfParameters: Long
 
   def isExecutable(program: IntcodeProgram): Boolean = program.opcode == Opcode
   def execute(program: IntcodeProgram): IntcodeProgram

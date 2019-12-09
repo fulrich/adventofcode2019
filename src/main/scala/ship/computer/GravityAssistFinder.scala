@@ -1,7 +1,5 @@
 package ship.computer
 
-import ship.computer.internals.MemoryManagement
-
 import scala.annotation.tailrec
 
 object GravityAssistFinder {

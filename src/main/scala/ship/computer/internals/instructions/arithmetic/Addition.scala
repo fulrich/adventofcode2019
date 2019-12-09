@@ -10,6 +10,9 @@ object Addition extends Instruction {
 
   def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
     program
-      .set(program.parameter(3), program.parameter(1).value + program.parameter(2).value)
+      .set(
+        program.parameterThree,
+        program.parameterOne.value + program.parameterTwo.value
+      )
   }
 }

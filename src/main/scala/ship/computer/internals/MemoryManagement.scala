@@ -4,10 +4,12 @@ import ship.computer.IntcodeProgram
 
 
 trait MemoryManagement { self: IntcodeProgram =>
-  def parameter(parameterNumber: Int): Parameter = Parameter(this, parameterNumber)
+  def parameter(parameterNumber: Long): Parameter = Parameter(this, parameterNumber)
 
-  def address(position: Int): Int = memory(position)
-  def set(address: Int, value: Int): IntcodeProgram = copy(memory = memory.updated(address, value))
+  def address(position: Long): Long = memory.lift(position.toInt).getOrElse(0)
+  def set(address: Long, value: Long): IntcodeProgram = copy(memory = memory.updated(address.toInt, value))
 
-  def set(parameter: Parameter, value: Int): IntcodeProgram = copy(memory = memory.updated(parameter.address, value))
+  def set(parameter: Parameter, value: Long): IntcodeProgram = {
+    copy(memory = memory.padTo(parameter.address.toInt + 1, 0L).updated(parameter.address.toInt, value))
+  }
 }

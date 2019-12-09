@@ -111,4 +111,31 @@ class IntcodeProgramTest extends AnyFunSuite with Matchers with ComputerTesting 
     result.hasFault shouldBe true
     result.state.error should contain ("Unknown Opcode Instruction: 20")
   }
+
+  test("Can handle relative mode parameters") {
+    val initialMemory = Vector[Long](109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99)
+    val program = IntcodeProgram(memory = initialMemory)
+
+    program.testExecute { (program, output) =>
+      program.state.isComplete shouldBe true
+      output should contain theSameElementsInOrderAs initialMemory
+    }
+  }
+
+  test("Can add large numbers") {
+    val program = IntcodeProgram.load(1102, 34915192, 34915192, 7, 4, 7, 99, 0)
+
+    program.testExecute { (program, output) =>
+      program.state.isComplete shouldBe true
+      output.last.toString.toCharArray should have length 16
+    }
+  }
+
+  test("Can handle large numbers") {
+    val program = IntcodeProgram.load(104, 1125899906842624L, 99)
+    program.testExecute { (program, output) =>
+      program.state.isComplete shouldBe true
+      output.last shouldBe 1125899906842624L
+    }
+  }
 }

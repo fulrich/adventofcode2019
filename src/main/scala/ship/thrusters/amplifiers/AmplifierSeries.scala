@@ -12,13 +12,13 @@ case class AmplifierSeries(phaseSettings: Seq[Int], controlProgram: IntcodeProgr
     Amplifier(phaseSetting, primedProgram)
   }
 
-  def run(input: Int = 0): AmplifierResult = AmplifierResult(
+  def run(input: Long = 0): AmplifierResult = AmplifierResult(
     phaseSettings = phaseSettings,
     result = amplifiers.foldLeft(input) { (output, amplifier) => amplifier.run(output).lastOutput}
   )
 
   @tailrec
-  final def runLooped(input: Int = 0): AmplifierResult = {
+  final def runLooped(input: Long = 0): AmplifierResult = {
     val result = run(input)
 
     if(amplifiers.last.isComplete) result

@@ -16,6 +16,6 @@ object AmplificationProgram {
     def from(resourceName: String): Try[IntcodeProgram] =
       raw(resourceName).map(intcode => IntcodeProgram(intcode))
 
-    def raw(resourceName: String): Try[Seq[Int]] =
-      Try(Source.fromResource(resourceName).getLines.mkString.split(Separator).map(_.toInt))
+    def raw(resourceName: String): Try[Seq[Long]] =
+      Try(Source.fromResource(resourceName).getLines.mkString.split(Separator).map(_.toLong))
 }

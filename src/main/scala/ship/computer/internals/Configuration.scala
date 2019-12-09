@@ -14,7 +14,7 @@ object Configuration {
     Output.Console
   )
 
-  def static(inputs: Seq[Int]): Configuration = Configuration(
+  def static(inputs: Seq[Long]): Configuration = Configuration(
     Input.Static(inputs),
     Output.Collection()
   )
@@ -24,7 +24,7 @@ object Configuration {
     Output.Collection()
   )
 
-  def singleInput(nextInput: Int): Configuration = Configuration(
+  def singleInput(nextInput: Long): Configuration = Configuration(
     Input.NextInput(nextInput),
     Output.Collection()
   )
