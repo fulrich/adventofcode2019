@@ -4,34 +4,27 @@ import ship.computer.{IntcodeProgram, Programs}
 
 
 object FindMaximumAmplifierSettings {
-  val DefaultNumberOfAmplifiers = 5;
   val DefaultProgram: IntcodeProgram = Programs.ThrusterAmplification.get
 
-  val MinimumPhaseSetting = 0
-  val MaximumPhaseSetting = 4
-  val ValidValues: Seq[Int] = (MinimumPhaseSetting to MaximumPhaseSetting).toVector
-
-  val MinimumLoopedPhaseSetting = 5
-  val MaximumLoopedPhaseSetting = 9
-  val ValidLoopedValues: Seq[Int] = (MinimumLoopedPhaseSetting to MaximumLoopedPhaseSetting).toVector
+  val ValidPhaseValues: Seq[Seq[Int]] = (0 to 4).toVector.permutations.toVector
+  val ValidLoopedPhaseValues: Seq[Seq[Int]] = (5 to 9).toVector.permutations.toVector
 
 
   def apply(controlProgram: IntcodeProgram = DefaultProgram): AmplifierSeries =
-    find(ValidValues) { possibleAmplifierSetting =>
+    find(ValidPhaseValues) { possibleAmplifierSetting =>
       AmplifierSeries(possibleAmplifierSetting, controlProgram).run()
     }
 
   def looped(controlProgram: IntcodeProgram = DefaultProgram): AmplifierSeries =
-    find(ValidLoopedValues) { possibleAmplifierSetting =>
+    find(ValidLoopedPhaseValues) { possibleAmplifierSetting =>
       AmplifierSeries(possibleAmplifierSetting, controlProgram).runLooped()
     }
 
 
-  private def find(validAmplifierSettings: Seq[Int])(amplifier: Seq[Int] => AmplifierSeries): AmplifierSeries = {
-    val possibleAmplifierSettings = validAmplifierSettings.permutations.toVector
-    val firstSeries = amplifier(possibleAmplifierSettings.head)
+  private def find(validAmplifierSettings: Seq[Seq[Int]])(amplifier: Seq[Int] => AmplifierSeries): AmplifierSeries = {
+    val firstSeries = amplifier(validAmplifierSettings.head)
 
-    possibleAmplifierSettings.foldLeft(firstSeries) { (result, possibleAmplifierSetting) =>
+    validAmplifierSettings.foldLeft(firstSeries) { (result, possibleAmplifierSetting) =>
       result.max(amplifier(possibleAmplifierSetting))
     }
   }
