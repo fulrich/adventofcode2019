@@ -8,13 +8,14 @@ object Programs {
   val GravityAssistProgram = "ship/computer/gravity_assist_program.txt"
   val DiagnosticsProgram = "ship/computer/diagnostics_program.txt"
   val BoostProgram = "ship/computer/boost_program.txt"
+  val AmplificationProgram = "ship/thrusters/amplification_program.txt"
   val Separator = ","
 
 
-  def gravityAssist: Try[IntcodeProgram] = from(GravityAssistProgram)
-  def diagnostics: Try[IntcodeProgram] = from(DiagnosticsProgram)
-  def boost: Try[IntcodeProgram] = from(BoostProgram)
-
+  lazy val GravityAssist: Try[IntcodeProgram] = from(GravityAssistProgram)
+  lazy val Diagnostics: Try[IntcodeProgram] = from(DiagnosticsProgram)
+  lazy val Boost: Try[IntcodeProgram] = from(BoostProgram)
+  lazy val ThrusterAmplification: Try[IntcodeProgram] = from(AmplificationProgram)
 
 
   def from(resourceName: String): Try[IntcodeProgram] =

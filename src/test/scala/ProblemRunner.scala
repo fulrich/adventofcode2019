@@ -33,7 +33,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
 
   test("Day 2 - Program 1: Fixing the Gravity Assist Program") {
-    val gravityAssistProgram = Programs.gravityAssist.get
+    val gravityAssistProgram = Programs.GravityAssist.get
     val gravityAssistLastState = gravityAssistProgram.set(1, 12).set(2, 2)
     val gravityAssistOutput = gravityAssistLastState.start().address(0)
     gravityAssistOutput shouldBe 5098658
@@ -80,7 +80,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
 
   test("Day 5 - Problem 1 - Run Diagnostic Tests on the Thermal Environment Supervision Terminal") {
-    val diagnosticProgram = Programs.diagnostics.get
+    val diagnosticProgram = Programs.Diagnostics.get
 
     diagnosticProgram.testInput(1).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 6731945
@@ -89,7 +89,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
   }
 
   test("Day 5 - Problem 2 - Run Diagnostic Tests on the Thermal Radiator Controller") {
-    val diagnosticProgram = Programs.diagnostics.get
+    val diagnosticProgram = Programs.Diagnostics.get
 
     diagnosticProgram.testInput(5).testOutput { diagnosticCodeList =>
       diagnosticCodeList.last shouldBe 9571668
@@ -117,16 +117,16 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
   test("Day 7 - Problem 1 - Find the amplifier signal to give the highest thruster boost") {
     val amplifierResult = FindMaximumAmplifierSettings()
-    amplifierResult.result shouldBe 24405
+    amplifierResult.lastOutput shouldBe 24405
 
-    printAnswer(day = 7, problem = 1, amplifierResult.result)
+    printAnswer(day = 7, problem = 1, amplifierResult.lastOutput)
   }
 
   test("Day 7 - Problem 2 - Find the amplifier signal to give the highest thruster boost using a looped configuration") {
     val amplifierResult = FindMaximumAmplifierSettings.looped()
-    amplifierResult.result shouldBe 8271623
+    amplifierResult.lastOutput shouldBe 8271623
 
-    printAnswer(day = 7, problem = 2, amplifierResult.result)
+    printAnswer(day = 7, problem = 2, amplifierResult.lastOutput)
   }
 
 
@@ -147,7 +147,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
 
   test("Day 9 - Problem 1 - Should output a single value from the BOOST program in test mode") {
-    val boostProgram = Programs.boost.get
+    val boostProgram = Programs.Boost.get
 
     boostProgram.testInput(1).testExecute { (program, boostTestResult) =>
       program.state.isComplete shouldBe true
@@ -157,7 +157,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
   }
 
   test("Day 9 - Problem 2 - Using the BOOST program can find the coordinates of the distress signal") {
-    val boostProgram = Programs.boost.get
+    val boostProgram = Programs.Boost.get
 
     boostProgram.testInput(2).testExecute { (program, boostTestResult) =>
       program.state.isComplete shouldBe true

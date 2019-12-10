@@ -7,7 +7,7 @@ object GravityAssistFinder {
   val VerbRange: Range = 0 to 99
 
   val SearchingFor = 19690720
-  val GravityAssistProgram: IntcodeProgram = Programs.gravityAssist.get
+  val GravityAssistProgram: IntcodeProgram = Programs.GravityAssist.get
 
   @tailrec
   def find(noun: Int = 0, verb: Int = 0): Int = {
