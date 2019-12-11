@@ -29,4 +29,15 @@ class OutputTest extends AnyFunSuite with Matchers with ComputerTesting {
 
     output.trackedOutput.last shouldBe 99
   }
+
+  test("Collects multiple outputs in order") {
+    val program = IntcodeProgram.load(4, 5, 4, 6, 99, 10, 20)
+    val expected = IntcodeProgram.load(4, 5, 4, 6, 99, 10, 20).setInstructionPointer(4)
+
+    val output = Output.Collection()
+    val result = output.execute(output.execute(program))
+
+    result shouldBe expected
+    output.trackedOutput should contain theSameElementsInOrderAs Vector(10, 20)
+  }
 }

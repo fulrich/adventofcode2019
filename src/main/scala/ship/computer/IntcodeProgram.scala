@@ -21,9 +21,12 @@ case class IntcodeProgram(
 
 
   final def start(): IntcodeProgram = IntcodeProgram.execute(this)
+
   def continue(input: Long): IntcodeProgram =
     if(state.isWaiting) stopWaiting.setInput(Input.NextInput(input)).start()
     else this
+
+  def output: Seq[Long] = configuration.output.trackedOutput
 }
 
 object IntcodeProgram {

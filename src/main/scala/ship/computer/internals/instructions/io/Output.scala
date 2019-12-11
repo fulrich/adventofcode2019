@@ -21,8 +21,8 @@ object Output {
     }
   }
 
-  case class Collection() extends Output {
-    private val outputValue: mutable.ArrayBuffer[Long] = new mutable.ArrayBuffer[Long]()
+  case class Collection(collection: Seq[Long] = Vector.empty) extends Output {
+    private val outputValue: mutable.ArrayBuffer[Long] = mutable.ArrayBuffer.from(collection)
 
     override def execute(program: IntcodeProgram): IntcodeProgram = withInstructionIncrement {
       outputValue.addOne(program.parameterOne.value)

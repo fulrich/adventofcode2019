@@ -8,6 +8,7 @@ import ship.ShipModules
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import grids.Point
+import ship.hull.EmergencyPaintingRobot
 import ship.panel.WirePanel
 import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
@@ -191,5 +192,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
     result shouldBe 2732
     printAnswer(day = 10, problem = 2, result)
+  }
+
+
+  test("Day 11 - Problem 1 - How many tiles does the emergency painting robot paint?") {
+    val robot = EmergencyPaintingRobot.initialize()
+    val result = robot.paint().numberOfPaintedPanels
+
+    result shouldBe 2415
+    printAnswer(day = 11, problem = 1, result)
   }
 }

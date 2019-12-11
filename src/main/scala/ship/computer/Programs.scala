@@ -5,18 +5,19 @@ import scala.util.Try
 
 
 object Programs {
-  val GravityAssistProgram = "ship/computer/gravity_assist_program.txt"
-  val DiagnosticsProgram = "ship/computer/diagnostics_program.txt"
-  val BoostProgram = "ship/computer/boost_program.txt"
-  val AmplificationProgram = "ship/thrusters/amplification_program.txt"
-  val HullPaintingProgram = "ship/hull/emergency_painting_robot_program.txt"
-  val Separator = ","
+  private val GravityAssistProgram = "ship/computer/gravity_assist_program.txt"
+  private val DiagnosticsProgram = "ship/computer/diagnostics_program.txt"
+  private val BoostProgram = "ship/computer/boost_program.txt"
+  private val AmplificationProgram = "ship/thrusters/amplification_program.txt"
+  private val HullPaintingProgram = "ship/hull/emergency_painting_robot_program.txt"
+  private val Separator = ","
 
 
   lazy val GravityAssist: Try[IntcodeProgram] = from(GravityAssistProgram)
   lazy val Diagnostics: Try[IntcodeProgram] = from(DiagnosticsProgram)
   lazy val Boost: Try[IntcodeProgram] = from(BoostProgram)
   lazy val ThrusterAmplification: Try[IntcodeProgram] = from(AmplificationProgram)
+  lazy val HullPainting: Try[IntcodeProgram] = from(HullPaintingProgram)
 
 
   def from(resourceName: String): Try[IntcodeProgram] =
