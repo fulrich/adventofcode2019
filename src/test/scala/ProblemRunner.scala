@@ -1,3 +1,5 @@
+import asteroidbelt.AsteroidMap
+import asteroidbelt.targeting.GiantLaserPrioritization
 import mars.{RoverPassword, SpaceImageChecksum}
 import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
@@ -164,5 +166,29 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
       boostTestResult.last shouldBe 59095
       printAnswer(day = 9, problem = 2, boostTestResult.last)
     }
+  }
+
+
+  test("Day 10 - Problem 1 - Find the best location for the new Ceres Monitoring Station") {
+    val asteroidMap = AsteroidMap.Ceres.get
+
+    val bestAsteroid = asteroidMap.asteroidWithMostVisibleAsteroids
+    val visibleAsteroids = asteroidMap.visibleAsteroidsFor(bestAsteroid)
+
+    visibleAsteroids shouldBe 344
+    printAnswer(day = 10, problem = 1, visibleAsteroids)
+  }
+
+  test("Day 10 - Problem 2 - Find out which was the 200th asteroid vaporized by the laser") {
+    val asteroidMap = AsteroidMap.Ceres.get
+    val bestAsteroid = asteroidMap.asteroidWithMostVisibleAsteroids
+    val targetList = new GiantLaserPrioritization(bestAsteroid).prioritize(asteroidMap)
+
+
+    val twoHundredthTarget = targetList.target(200)
+    val result = twoHundredthTarget.asteroid.x * 100 + twoHundredthTarget.asteroid.y
+
+    result shouldBe 2732
+    printAnswer(day = 10, problem = 2, result)
   }
 }
