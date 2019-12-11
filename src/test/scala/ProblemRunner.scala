@@ -7,8 +7,7 @@ import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
-import grids.Point
-import ship.hull.EmergencyPaintingRobot
+import ship.hull.{EmergencyPaintingRobot, PaintPrinter}
 import ship.panel.WirePanel
 import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
@@ -201,5 +200,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
     result shouldBe 2415
     printAnswer(day = 11, problem = 1, result)
+  }
+
+  test("Day 11 - Problem 2 - Determine the registration identifier to avoid Space Jail") {
+    val robot = EmergencyPaintingRobot.initializeOnWhite()
+    val painted = robot.paint().painted
+
+    printAnswer(day = 11, problem = 1) {
+      PaintPrinter(painted)
+    }
   }
 }

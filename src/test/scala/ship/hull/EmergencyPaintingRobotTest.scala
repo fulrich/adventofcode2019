@@ -9,10 +9,6 @@ import ship.computer.internals.instructions.io.Output
 class EmergencyPaintingRobotTest extends AnyFunSuite with Matchers {
   val robot: EmergencyPaintingRobot = EmergencyPaintingRobot.initialize()
 
-  test("What happens?") {
-    val robot = EmergencyPaintingRobot.initialize()
-    println(robot.paint().numberOfPaintedPanels)
-  }
 
   test("If the area hasn't been colour yet the colour is always black") {
     robot.painted shouldBe empty

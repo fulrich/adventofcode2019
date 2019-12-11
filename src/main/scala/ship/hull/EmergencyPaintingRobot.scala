@@ -37,6 +37,9 @@ object EmergencyPaintingRobot {
     )
   }
 
+  def initializeOnWhite(): EmergencyPaintingRobot =
+    initialize().copy(painted = Vector(PaintedPoint(Point.Origin, Paint.White)))
+
   @tailrec
   def paint(robot: EmergencyPaintingRobot, count: Int = 0): EmergencyPaintingRobot =
     if(robot.donePainting) robot
