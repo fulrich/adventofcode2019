@@ -1,8 +1,9 @@
 package ship.panel
 
+import grids.Point
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
-import ship.panel.parts.{Point, Wire}
+import ship.panel.parts.Wire
 
 
 class WirePanelTest extends AnyFunSuite with Matchers {
@@ -43,8 +44,8 @@ class WirePanelTest extends AnyFunSuite with Matchers {
       Wire.fromRaw("U62,R66,U55,R34,D71,R55,D58,R83")
     )
 
-    wirePanel.intersectionWithMinimumDistanceTo(Point.CentralPort) shouldBe Point(155, 4)
-    wirePanel.minimumDistanceTo(Point.CentralPort) shouldBe 159
+    wirePanel.intersectionWithMinimumDistanceTo(WirePanel.CentralPort) shouldBe Point(155, 4)
+    wirePanel.minimumDistanceTo(WirePanel.CentralPort) shouldBe 159
   }
 
   test("Can find the closest intersection and distance to a specific point of long wires") {
@@ -53,7 +54,7 @@ class WirePanelTest extends AnyFunSuite with Matchers {
       Wire.fromRaw("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
     )
 
-    wirePanel.intersectionWithMinimumDistanceTo(Point.CentralPort) shouldBe Point(124, 11)
-    wirePanel.minimumDistanceTo(Point.CentralPort) shouldBe 135
+    wirePanel.intersectionWithMinimumDistanceTo(WirePanel.CentralPort) shouldBe Point(124, 11)
+    wirePanel.minimumDistanceTo(WirePanel.CentralPort) shouldBe 135
   }
 }

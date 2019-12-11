@@ -1,5 +1,8 @@
 package ship.panel.parts
 
+import grids.Point
+
+
 sealed abstract class WireDirection {
   def distance: Int
   def lineFrom(point: Point): Line

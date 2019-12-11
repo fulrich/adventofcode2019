@@ -1,6 +1,7 @@
 package ship.panel
 
-import ship.panel.parts.{Point, Wire}
+import grids.Point
+import ship.panel.parts.Wire
 
 
 case class WirePanel(wire1: Wire, wire2: Wire) {
@@ -10,7 +11,7 @@ case class WirePanel(wire1: Wire, wire2: Wire) {
     Ordering.by((intersection: Point) => wire1.stepsTo(intersection) + wire2.stepsTo(intersection))
 
   private def orderByDistanceTo(otherPoint: Point): Ordering[Point] =
-    Ordering.by((point: Point) => point.manhattanDistanceTo(otherPoint))
+    Ordering.by((point: Point) => point.distanceTo(otherPoint))
 
 
   lazy val intersectionWithMinimalSteps: Point = IntersectionPoints.min(OrderBySteps)
@@ -20,5 +21,9 @@ case class WirePanel(wire1: Wire, wire2: Wire) {
 
   def intersectionWithMinimumDistanceTo(point: Point): Point = IntersectionPoints.min(orderByDistanceTo(point))
 
-  def minimumDistanceTo(point: Point): Int = intersectionWithMinimumDistanceTo(point).manhattanDistanceTo(point)
+  def minimumDistanceTo(point: Point): Int = intersectionWithMinimumDistanceTo(point).distanceTo(point)
+}
+
+object WirePanel {
+  val CentralPort: Point = Point.Origin
 }

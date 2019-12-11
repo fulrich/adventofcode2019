@@ -1,12 +1,13 @@
 package ship.panel.parts
 
+import grids.Point
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 
 class WireTest extends AnyFunSuite with Matchers {
   val Expected: Wire = Wire.fromLines(
-    Line(Point.CentralPort, Point(8, 0)),
+    Line(Point.Origin, Point(8, 0)),
     Line(Point(8, 0), Point(8, 5)),
     Line(Point(8, 5), Point(3, 5)),
     Line(Point(3, 5), Point(3, 2))

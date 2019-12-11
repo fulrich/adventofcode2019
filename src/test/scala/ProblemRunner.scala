@@ -7,7 +7,8 @@ import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
-import ship.panel.parts.Point
+import grids.Point
+import ship.panel.WirePanel
 import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
 
@@ -53,7 +54,7 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
   test("Day 3 - Problem 1: Fix the Fuel Management System Finding Manhattan Closest") {
     val wirePanel = FuelManagement.Panel.get
-    val distanceToCentralPort = wirePanel.minimumDistanceTo(Point.CentralPort) shouldBe 316
+    val distanceToCentralPort = wirePanel.minimumDistanceTo(WirePanel.CentralPort) shouldBe 316
 
     printAnswer(day = 3, problem = 1, distanceToCentralPort)
   }

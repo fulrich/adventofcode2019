@@ -1,5 +1,8 @@
 package ship.panel.parts
 
+import grids.Point
+
+
 case class Line(point1: Point, point2: Point) {
   lazy val allPoints: Seq[Point] =
     if(isHorizontal) withDirectionality(point1.x > point2.x) { xRange.toVector.map(horizontalPoint) }
@@ -14,6 +17,6 @@ case class Line(point1: Point, point2: Point) {
   lazy val isHorizontal: Boolean = point1.y == point2.y
   lazy val isVertical: Boolean = point1.x == point2.x
 
-  private def withDirectionality(isNegativeDirection: Boolean)(f: => Seq[Point]) =
+  private def withDirectionality(isNegativeDirection: Boolean)(f: => Seq[Point]): Seq[Point] =
     if(isNegativeDirection) f.reverse else f
 }

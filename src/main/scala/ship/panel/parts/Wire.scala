@@ -1,17 +1,21 @@
 package ship.panel.parts
 
+import grids.Point
+import ship.panel.WirePanel
+
+
 case class Wire(segments: Seq[Line] = Vector.empty) {
   lazy val allPoints: Seq[Point] =
     segments.init.flatMap(_.allPoints.dropRight(1)) ++ segments.last.allPoints
 
-  def intersectionPoints(wire: Wire): Seq[Point] = allPoints.intersect(wire.allPoints).filterNot(Point.CentralPort.==)
+  def intersectionPoints(wire: Wire): Seq[Point] = allPoints.intersect(wire.allPoints).filterNot(WirePanel.CentralPort.==)
 
   def stepsTo(point: Point): Int = {
     allPoints.segmentLength(pointInLine => pointInLine != point)
   }
 
   def addSegment(direction: WireDirection): Wire = {
-    val lastPoint = segments.lastOption.map(_.point2).getOrElse(Point.CentralPort)
+    val lastPoint = segments.lastOption.map(_.point2).getOrElse(WirePanel.CentralPort)
     copy(segments = segments :+ direction.lineFrom(lastPoint))
   }
 }

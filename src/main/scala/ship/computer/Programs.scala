@@ -9,6 +9,7 @@ object Programs {
   val DiagnosticsProgram = "ship/computer/diagnostics_program.txt"
   val BoostProgram = "ship/computer/boost_program.txt"
   val AmplificationProgram = "ship/thrusters/amplification_program.txt"
+  val HullPaintingProgram = "ship/hull/emergency_painting_robot_program.txt"
   val Separator = ","
 
 

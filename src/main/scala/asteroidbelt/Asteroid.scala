@@ -1,14 +1,13 @@
 package asteroidbelt
 
+import grids.PointLike
 
-case class Asteroid(x: Int, y: Int) {
+
+case class Asteroid(x: Int, y: Int) extends PointLike {
   def slopeFrom(other: Asteroid): Slope = Slope(
     calculateAngle(other),
     Quadrant(other, this)
   )
-
-  def distanceTo(other: Asteroid): Int =
-    Math.abs((Math.abs(x) - Math.abs(other.x)) + (Math.abs(y) - Math.abs(other.y)))
 
   private def calculateAngle(other: Asteroid): Option[Double] = {
     val rise: Double = other.y - y

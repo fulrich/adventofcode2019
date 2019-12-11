@@ -1,5 +1,6 @@
 package ship.panel.parts
 
+import grids.Point
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
