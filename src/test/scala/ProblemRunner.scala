@@ -1,5 +1,6 @@
 import asteroidbelt.AsteroidMap
 import asteroidbelt.targeting.GiantLaserPrioritization
+import jupiter.JupiterOrbit
 import mars.{RoverPassword, SpaceImageChecksum}
 import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
@@ -209,5 +210,14 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
     printAnswer(day = 11, problem = 1) {
       PaintPrinter(painted)
     }
+  }
+
+
+  test("Day 12 - Problem 1 - Calculate the total energy of the moons in Jupiter's orbit") {
+    val jupiterOrbit = JupiterOrbit.Scan
+    val jupiterOrbitResult = jupiterOrbit.orbitAfter(1000)
+
+    jupiterOrbitResult.totalEnergy shouldBe 10198
+    printAnswer(day = 12, problem = 1, answer = jupiterOrbitResult.totalEnergy)
   }
 }
