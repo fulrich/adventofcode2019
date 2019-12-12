@@ -77,4 +77,19 @@ class GravitySimulatorTest extends AnyFunSuite with Matchers {
       Moon(position = Position3d(x = 2, y= 0, z= 4), velocity = Position3d(x = 1, y = -1, z = -1))
     )
   }
+
+  test("Can determine how long it takes to return to the initial state") {
+    EfficientGravitySimulator.stepsToInitial(jupiterTest) shouldBe 2772
+  }
+
+  test("Can calculate the number of steps even when it is a very large number") {
+    val longRunning = JupiterOrbit(Vector(
+      Moon.at(x = -8, y = -10, z = 0),
+      Moon.at(x = 5, y = 5, z = 10),
+      Moon.at(x = 2, y = -7, z = 3),
+      Moon.at(x = 9, y = -8, z = -3),
+    ))
+
+    EfficientGravitySimulator.stepsToInitial(longRunning) shouldBe 4686774924L
+  }
 }

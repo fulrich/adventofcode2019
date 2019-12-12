@@ -4,6 +4,9 @@ package jupiter
 case class JupiterOrbit(moons: Seq[Moon]) {
   lazy val totalEnergy: Int = moons.map(_.totalEnergy).sum
   def orbitAfter(steps: Int): JupiterOrbit = GravitySimulator.step(this, steps)
+  def stepsToInitial: Long = GravitySimulator.stepsToInitial(GravitySimulator.simulate(this), 1)
+
+  lazy val noVelocity: Boolean = moons.forall(_.noVelocity)
 }
 
 object JupiterOrbit {

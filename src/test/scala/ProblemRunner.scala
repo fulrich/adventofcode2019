@@ -1,6 +1,6 @@
 import asteroidbelt.AsteroidMap
 import asteroidbelt.targeting.GiantLaserPrioritization
-import jupiter.JupiterOrbit
+import jupiter.{EfficientGravitySimulator, JupiterOrbit}
 import mars.{RoverPassword, SpaceImageChecksum}
 import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
@@ -219,5 +219,13 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
     jupiterOrbitResult.totalEnergy shouldBe 10198
     printAnswer(day = 12, problem = 1, answer = jupiterOrbitResult.totalEnergy)
+  }
+
+  test("Day 12 - Problem 2 - Calculate how long it will take the moons to reach their initial state") {
+    val jupiterOrbit = JupiterOrbit.Scan
+    val numberOfStepsToInitial = EfficientGravitySimulator.stepsToInitial(jupiterOrbit)
+
+    numberOfStepsToInitial shouldBe 10198
+    printAnswer(day = 12, problem = 2, answer = numberOfStepsToInitial)
   }
 }

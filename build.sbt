@@ -6,7 +6,8 @@ scalaVersion := "2.13.1"
 
 // Production
 libraryDependencies ++= Seq(
-  "org.scalactic" %% "scalactic" % "3.1.0"
+  "org.scalactic" %% "scalactic" % "3.1.0",
+  "org.apache.commons" % "commons-math3" % "3.6.1"
 )
 
 // Test
