@@ -23,13 +23,7 @@ case class Cabinet(program: IntcodeProgram, screen: Screen) {
     copy(program = continuedProgram, screen = screen.updateScreen(continuedProgram.output))
   }
 
-  def autoPlayInput(): Int = {
-    if(ball.x < paddle.x) -1
-    else if (ball.x > paddle.x) 1
-    else 0
-  }
-
-  def autoPlay(): Cabinet = continue(autoPlayInput())
+  def autoPlay(): Cabinet = continue(ball.x.compare(paddle.x))
 
   def print(): Unit = {
     println("SCORE: " + screen.score)
