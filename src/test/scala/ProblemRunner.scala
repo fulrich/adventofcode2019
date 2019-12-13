@@ -6,6 +6,7 @@ import mercury.{OrbitalMapBuilder, OrbitalPathFinder}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import ship.ShipModules
+import ship.arcade.{Cabinet, Tile}
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.hull.{EmergencyPaintingRobot, PaintPrinter}
@@ -225,7 +226,24 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
     val jupiterOrbit = JupiterOrbit.Scan
     val numberOfStepsToInitial = EfficientGravitySimulator.stepsToInitial(jupiterOrbit)
 
-    numberOfStepsToInitial shouldBe 10198
+    numberOfStepsToInitial shouldBe 271442326847376L
     printAnswer(day = 12, problem = 2, answer = numberOfStepsToInitial)
+  }
+
+
+  test("Day 13 - Problem 1 - Count how many block tiles are on the arcade game screen") {
+    val game = Cabinet.start()
+    val numberOfWallTiles = game.numberOf(Tile.Block)
+
+    numberOfWallTiles shouldBe 260
+    printAnswer(day = 12, problem = 2, answer = numberOfWallTiles)
+  }
+
+  test("Day 13 - Problem 2 - What is the score after beating the arcade game") {
+    val game = Cabinet.start(quarters = 2)
+    val result = Cabinet.play(game)
+
+    result.screen.score shouldBe 12952
+    printAnswer(day = 13, problem = 2, answer = result.screen.score)
   }
 }

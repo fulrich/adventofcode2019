@@ -10,6 +10,7 @@ object Programs {
   private val BoostProgram = "ship/computer/boost_program.txt"
   private val AmplificationProgram = "ship/thrusters/amplification_program.txt"
   private val HullPaintingProgram = "ship/hull/emergency_painting_robot_program.txt"
+  private val ArcadeGameProgram = "ship/arcade/game_program.txt"
   private val Separator = ","
 
 
@@ -18,6 +19,7 @@ object Programs {
   lazy val Boost: Try[IntcodeProgram] = from(BoostProgram)
   lazy val ThrusterAmplification: Try[IntcodeProgram] = from(AmplificationProgram)
   lazy val HullPainting: Try[IntcodeProgram] = from(HullPaintingProgram)
+  lazy val ArcadeGame: Try[IntcodeProgram] = from(ArcadeGameProgram)
 
 
   def from(resourceName: String): Try[IntcodeProgram] =
