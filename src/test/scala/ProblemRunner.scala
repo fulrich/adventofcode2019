@@ -10,6 +10,7 @@ import ship.arcade.{Cabinet, Tile}
 import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.hull.{EmergencyPaintingRobot, PaintPrinter}
+import ship.nanofactory.Nanofactory
 import ship.panel.WirePanel
 import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
@@ -245,5 +246,23 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
     result.screen.score shouldBe 12952
     printAnswer(day = 13, problem = 2, answer = result.screen.score)
+  }
+
+
+  test("Day 14 - Problem 1 - Determine how much ore is needed to create 1 FUEL") {
+    val factory = Nanofactory.load()
+    val requiredOre = factory.processFuel().ore
+
+    requiredOre shouldBe 397771
+    printAnswer(day = 14, problem = 1, answer = requiredOre)
+  }
+
+  ignore("Day 14 - Problem 2 - Determine how much ore is needed to create 1 FUEL") {
+    val AvailableOre: Long = 1000000000000L
+    val factory = Nanofactory.load()
+    val createdFuel = Nanofactory.findFuelForOre(factory, AvailableOre)
+
+    createdFuel shouldBe 3126714
+    printAnswer(day = 14, problem = 1, answer = createdFuel)
   }
 }
