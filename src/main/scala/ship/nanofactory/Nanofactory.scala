@@ -9,7 +9,7 @@ case class Nanofactory(
   availableExcess: ChemicalList = ChemicalList.Empty) {
   def create(goal: Chemical): Nanofactory = copy(stillRequired = stillRequired + goal)
 
-  def processFuel(quantity: Long = 1): Nanofactory = Nanofactory.process(this.create(Chemical(1, "FUEL")))
+  def processFuel(quantity: Long = 1): Nanofactory = Nanofactory.process(this.create(Chemical(quantity, "FUEL")))
   def process: Nanofactory = Nanofactory.process(this)
 
   def nextRequired: Nanofactory = next match {
@@ -63,42 +63,16 @@ object Nanofactory {
     else process(factory.nextRequired)
 
   @tailrec
-  def processUntilNoExcess(factory: Nanofactory, availableOre: Long, count: Long = 0): (Long, Nanofactory) = {
-    val nextProcessedFuel = factory.processFuel()
+  def findFuelForOre(factory: Nanofactory, availableOre: Long, minimum: Long = 0, maximum: Long = 100_000_000): Long = {
+    val middleValue: Long = (maximum + minimum) / 2;
+    val factoryResult = factory.processFuel(middleValue)
 
-    if(nextProcessedFuel.availableExcess.chemicals.isEmpty) {
-      println("Found Run Length")
-      (count + 1, nextProcessedFuel)
+    if (minimum > maximum) { maximum }
+    else {
+      if (factoryResult.ore > availableOre) findFuelForOre(factory, availableOre, minimum, middleValue - 1)
+      else if (factoryResult.ore < availableOre) findFuelForOre(factory, availableOre, middleValue + 1, maximum)
+      else middleValue
     }
-    else if (nextProcessedFuel.ore > availableOre) {
-      println(nextProcessedFuel.ore + " > " + availableOre)
-      println("Hit Available Ore Limit")
-      (count + 1, nextProcessedFuel)
-    }
-    else processUntilNoExcess(nextProcessedFuel, availableOre, count + 1)
-  }
-
-  @tailrec
-  private def fuelForOre(factory: Nanofactory, availableOre: Long, fuelCreated: Long = 0): Long ={
-    val nextProcessedFuel = factory.processFuel()
-
-    if(nextProcessedFuel.ore > availableOre) fuelCreated
-    else fuelForOre(nextProcessedFuel, availableOre, fuelCreated + 1)
-  }
-
-  def findFuelForOre(factory: Nanofactory, availableOre: Long): Long = {
-    val resultFromRun = Nanofactory.processUntilNoExcess(factory, availableOre)
-
-    val createdFuelFromRun: Long = resultFromRun._1
-    val requiredOreFromRun: Long = resultFromRun._2.ore
-
-    val runsPossible: Long = math.floor(availableOre.toDouble / requiredOreFromRun.toDouble).toLong
-    val totalCreatedFuelFromRun: Long = createdFuelFromRun * runsPossible
-
-    val remainingOreAfterRuns = availableOre - (requiredOreFromRun * runsPossible)
-    val fuelFromRemainingOre = Nanofactory.fuelForOre(factory, remainingOreAfterRuns)
-
-    totalCreatedFuelFromRun + fuelFromRemainingOre
   }
 }
 

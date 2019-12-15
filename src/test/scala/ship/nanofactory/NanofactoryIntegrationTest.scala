@@ -103,7 +103,7 @@ class NanofactoryIntegrationTest extends FunSuite with Matchers {
     Nanofactory(ReactionSet4).processFuel().ore shouldBe 2210736
   }
 
-  ignore("Integration Test 4 - Find Fuel created for Ore") {
+  test("Integration Test 4 - Find Fuel created for Ore") {
     Nanofactory.findFuelForOre(Nanofactory(ReactionSet4), AvailableOre) shouldBe 460664
   }
 }

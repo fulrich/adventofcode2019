@@ -257,8 +257,8 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
     printAnswer(day = 14, problem = 1, answer = requiredOre)
   }
 
-  ignore("Day 14 - Problem 2 - Determine how much ore is needed to create 1 FUEL") {
-    val AvailableOre: Long = 1000000000000L
+  test("Day 14 - Problem 2 - Determine how much ore is needed to create 1 FUEL") {
+    val AvailableOre: Long = 1_000_000_000_000L
     val factory = Nanofactory.load()
     val createdFuel = Nanofactory.findFuelForOre(factory, AvailableOre)
 
