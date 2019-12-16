@@ -11,6 +11,7 @@ import ship.computer._
 import ship.fuel.{FuelCounterUpper, FuelManagement, ModuleFueler}
 import ship.hull.{EmergencyPaintingRobot, PaintPrinter}
 import ship.nanofactory.Nanofactory
+import ship.oxygen.{RepairRobot, ShortestPathFinder}
 import ship.panel.WirePanel
 import ship.thrusters.amplifiers.FindMaximumAmplifierSettings
 import venus.FuelDepot
@@ -264,5 +265,22 @@ class ProblemRunner extends AnyFunSuite with Matchers with ComputerTesting with 
 
     createdFuel shouldBe 3126714
     printAnswer(day = 14, problem = 1, answer = createdFuel)
+  }
+
+
+  test("Day 15 - Problem 1 - Determine how long the shortest path to the Oxygen System is") {
+    val exploredRobot = RepairRobot.explore()
+    val shortestPathLength = ShortestPathFinder(exploredRobot.area).search(_.isFound)
+
+    shortestPathLength shouldBe 424
+    printAnswer(day = 15, problem = 1, answer = shortestPathLength)
+  }
+
+  test("Day 15 - Problem 2 - Determine how long until the entire corridor is filled") {
+    val exploredRobot = RepairRobot.explore()
+    val minutesUntilFilled = ShortestPathFinder(exploredRobot.area).search(_.allVisited)
+
+    (minutesUntilFilled - 1) shouldBe 446
+    printAnswer(day = 15, problem = 2, answer = minutesUntilFilled)
   }
 }
